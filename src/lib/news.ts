@@ -28,6 +28,10 @@ export interface NewsItem {
   eventEnd?: string;
   /** Official article thumbnail from pokemongo.com (absolute URL or /public path). */
   image?: string;
+  /** Path to the matching TrainerDex hundo-CP graphic page (used to render a CTA in the article). */
+  graphicHref?: string;
+  /** Preview image for the graphic CTA card (path relative to /public). */
+  graphicPreview?: string;
 }
 
 export const OFFICIAL_NEWS_BASE = "https://pokemongo.com/en/news";
@@ -97,26 +101,26 @@ export function articleSummary(slug: string): string | undefined {
 
 /** Snapshot of the official newsroom, newest first. */
 export const NEWS: NewsItem[] = [
-  { slug: "ozone-ascent-2026", title: "Complete Timed Research to encounter Rayquaza and more!", date: "2026-06-26", category: "research", eventStart: "2026-07-25", eventEnd: "2026-07-26" },
+  { slug: "ozone-ascent-2026", title: "Complete Timed Research to encounter Rayquaza and more!", date: "2026-06-26", category: "research", eventStart: "2026-07-25", eventEnd: "2026-07-26", graphicHref: "/graphic/raids", graphicPreview: "/graphics/raid-hundo-cp.png" },
   { slug: "happy-birthday-professor-willow-2026", title: "Wish Professor Willow a very happy birthday with Professor Willow's assistant Pikachu!", date: "2026-06-25", category: "update", eventStart: "2026-07-21", eventEnd: "2026-07-21" },
   { slug: "special-anniversary-pikachu-celebration", title: "Keep the festivities going with the Special Anniversary Pikachu Celebration event!", date: "2026-06-24", category: "update", eventStart: "2026-07-13", eventEnd: "2026-07-20" },
-  { slug: "gofest-2026-global", title: "Pokémon GO Fest 2026: Global — Everything You Need to Know", date: "2026-06-23", category: "go-fest", eventStart: "2026-07-11", eventEnd: "2026-07-12", image: "/graphics/event-go-fest-global.png" },
+  { slug: "gofest-2026-global", title: "Pokémon GO Fest 2026: Global — Everything You Need to Know", date: "2026-06-23", category: "go-fest", eventStart: "2026-07-11", eventEnd: "2026-07-12", image: "/graphics/event-go-fest-global.png", graphicHref: "/graphic/go-fest", graphicPreview: "/graphics/event-go-fest-global.png" },
   { slug: "pvp-updates-competitors-cup-2026", title: "Pokémon GO Trainer Battle Update", date: "2026-06-23", category: "battle", eventStart: "2026-06-23" },
-  { slug: "road-of-legends-2026", title: "The Road of Legends leads the way to Pokémon GO Fest 2026: Global!", date: "2026-06-18", category: "go-fest", eventStart: "2026-06-18", eventEnd: "2026-07-11" },
-  { slug: "community-celebrations-go-fest-2026-details-asia-pacific", title: "GO Fest 2026: Global Community Celebrations in the Asia-Pacific region!", date: "2026-06-17", category: "go-fest", eventStart: "2026-07-11", eventEnd: "2026-07-12" },
-  { slug: "community-celebrations-go-fest-2026-details-en", title: "GO Fest 2026: Global Community Celebrations in North America, Europe, and Oceania!", date: "2026-06-17", category: "go-fest", eventStart: "2026-07-11", eventEnd: "2026-07-12" },
+  { slug: "road-of-legends-2026", title: "The Road of Legends leads the way to Pokémon GO Fest 2026: Global!", date: "2026-06-18", category: "go-fest", eventStart: "2026-06-18", eventEnd: "2026-07-11", graphicHref: "/graphics", graphicPreview: "/graphics/event-road-of-legends.png" },
+  { slug: "community-celebrations-go-fest-2026-details-asia-pacific", title: "GO Fest 2026: Global Community Celebrations in the Asia-Pacific region!", date: "2026-06-17", category: "go-fest", eventStart: "2026-07-11", eventEnd: "2026-07-12", graphicHref: "/graphic/go-fest", graphicPreview: "/graphics/event-go-fest-global.png" },
+  { slug: "community-celebrations-go-fest-2026-details-en", title: "GO Fest 2026: Global Community Celebrations in North America, Europe, and Oceania!", date: "2026-06-17", category: "go-fest", eventStart: "2026-07-11", eventEnd: "2026-07-12", graphicHref: "/graphic/go-fest", graphicPreview: "/graphics/event-go-fest-global.png" },
   { slug: "communityday-july-2026-sobble", title: "July 2026 Community Day: Sobble", date: "2026-06-16", category: "community-day", eventStart: "2026-07-19", eventEnd: "2026-07-19" },
   { slug: "save-the-date-apac-30th-anniversary-2026", title: "Save the Date: Pokémon 30th Anniversary Celebration — PokéXciting!", date: "2026-06-16", category: "update" },
-  { slug: "raichu-super-mega-raid-day-2026", title: "Sparks fly for Raichu Super Mega Raid Day!", date: "2026-06-15", category: "raid", eventStart: "2026-07-18", eventEnd: "2026-07-18" },
+  { slug: "raichu-super-mega-raid-day-2026", title: "Sparks fly for Raichu Super Mega Raid Day!", date: "2026-06-15", category: "raid", eventStart: "2026-07-18", eventEnd: "2026-07-18", graphicHref: "/graphic/raids", graphicPreview: "/graphics/raid-hundo-cp.png" },
   { slug: "lego-pokemon-go-2026", title: "Continue building the adventure with LEGO Stores and Pokémon GO!", date: "2026-06-13", category: "update", eventStart: "2026-08-03", eventEnd: "2026-09-30" },
   { slug: "10th-anniversary-party", title: "Celebrate a decade of Pokémon GO during the 10th Anniversary Party!", date: "2026-06-11", category: "update", eventStart: "2026-07-06", eventEnd: "2026-07-12" },
   { slug: "choose-your-path-forever-forward-2026", title: "Choose Your Path with new Timed Research and Daily Discoveries updates!", date: "2026-06-10", category: "research", eventStart: "2026-06-10" },
-  { slug: "gofest-copenhagen-super-mega-raid", title: "Super Mega Raid Update at Pokémon GO Fest 2026: Copenhagen Park Experience", date: "2026-06-09", category: "raid", eventStart: "2026-06-13", eventEnd: "2026-06-15" },
+  { slug: "gofest-copenhagen-super-mega-raid", title: "Super Mega Raid Update at Pokémon GO Fest 2026: Copenhagen Park Experience", date: "2026-06-09", category: "raid", eventStart: "2026-06-13", eventEnd: "2026-06-15", graphicHref: "/graphic/raids", graphicPreview: "/graphics/raid-hundo-cp.png" },
   { slug: "flying-taxi-taken-over-2026", title: "Rescue Shadow Reshiram and more during Flying Taxi: Taken Over!", date: "2026-06-09", category: "update", eventStart: "2026-06-12", eventEnd: "2026-06-17" },
   { slug: "flying-taxi-2026", title: "Take Flight as Squawkabilly's Debut Leads the Flying Taxi Charge", date: "2026-06-09", category: "update", eventStart: "2026-06-05", eventEnd: "2026-06-12" },
   { slug: "gofest-chicago-saturday-update", title: "Gameplay Update: Chicago Pokémon GO Fest", date: "2026-06-07", category: "go-fest", eventStart: "2026-06-06", eventEnd: "2026-06-07" },
-  { slug: "skarmory-super-mega-raid-day-2026", title: "Stay sharp for Skarmory Super Mega Raid Day!", date: "2026-06-04", category: "raid", eventStart: "2026-06-27", eventEnd: "2026-06-27" },
-  { slug: "gofest-chicago-super-mega-raid", title: "Super Mega Raid Update at Pokémon GO Fest 2026: Chicago Park Experience", date: "2026-06-03", category: "raid", eventStart: "2026-06-05", eventEnd: "2026-06-07" },
+  { slug: "skarmory-super-mega-raid-day-2026", title: "Stay sharp for Skarmory Super Mega Raid Day!", date: "2026-06-04", category: "raid", eventStart: "2026-06-27", eventEnd: "2026-06-27", graphicHref: "/graphic/raids", graphicPreview: "/graphics/raid-hundo-cp.png" },
+  { slug: "gofest-chicago-super-mega-raid", title: "Super Mega Raid Update at Pokémon GO Fest 2026: Chicago Park Experience", date: "2026-06-03", category: "raid", eventStart: "2026-06-05", eventEnd: "2026-06-07", graphicHref: "/graphic/raids", graphicPreview: "/graphics/raid-hundo-cp.png" },
   { slug: "pokemon-run-30-2026", title: "Ready, set, GO! Join the Pokémon RUN 30 event near you!", date: "2026-06-02", category: "update", eventStart: "2026-05-30", eventEnd: "2026-07-19" },
   { slug: "go-fest-chicago-2026-community", title: "Pokémon GO Fest 2026: Chicago Community Ambassador Meet-ups", date: "2026-06-01", category: "go-fest", eventStart: "2026-06-04", eventEnd: "2026-06-07" },
   { slug: "know-before-you-go-gofest-2026-in-person-events", title: "Know before you GO to Pokémon GO Fest 2026: Tokyo, Chicago, and Copenhagen", date: "2026-05-29", category: "go-fest", eventStart: "2026-05-16", eventEnd: "2026-06-15" },
@@ -125,8 +129,8 @@ export const NEWS: NewsItem[] = [
   { slug: "go-battle-league-forever-forward", title: "GO Battle League: Forever Forward Update", date: "2026-05-26", category: "battle", eventStart: "2026-05-26" },
   { slug: "pgo-pokemon-fossil-musuem-chicago-2026", title: "Celebrate with Pokémon GO at the Pokémon Fossil Museum in Chicago!", date: "2026-05-22", category: "update", eventStart: "2026-05-22", eventEnd: "2027-04-11" },
   { slug: "100-thieves-mega-mewtwo-go-fest-2026", title: "Pokémon GO Fest 2026 and 100 Thieves team up for an exclusive capsule collection in Chicago!", date: "2026-05-20", category: "go-fest", eventStart: "2026-06-04", eventEnd: "2026-06-07" },
-  { slug: "gofest-tokyo-super-mega-raid", title: "Update on the 'Super Mega Raid' at the Pokémon GO Fest 2026: Tokyo Park Experience", date: "2026-05-19", category: "raid", eventStart: "2026-05-16", eventEnd: "2026-05-18" },
-  { slug: "global-events-gofest2026-overlays", title: "Team up with Blanche, Spark, and Candela on a summer quest!", date: "2026-05-18", category: "go-fest", eventStart: "2026-05-18", eventEnd: "2026-07-13" },
+  { slug: "gofest-tokyo-super-mega-raid", title: "Update on the 'Super Mega Raid' at the Pokémon GO Fest 2026: Tokyo Park Experience", date: "2026-05-19", category: "raid", eventStart: "2026-05-16", eventEnd: "2026-05-18", graphicHref: "/graphic/raids", graphicPreview: "/graphics/raid-hundo-cp.png" },
+  { slug: "global-events-gofest2026-overlays", title: "Team up with Blanche, Spark, and Candela on a summer quest!", date: "2026-05-18", category: "go-fest", eventStart: "2026-05-18", eventEnd: "2026-07-13", graphicHref: "/graphic/go-fest", graphicPreview: "/graphics/event-go-fest-global.png" },
   { slug: "community-celebrations-go-fest-2026", title: "Find your community at Community Celebrations during GO Fest 2026: Global!", date: "2026-05-14", category: "go-fest", eventStart: "2026-07-11", eventEnd: "2026-07-12" },
   { slug: "mega-mewtwo-gofest-2026", title: "Mewtwo Mega Evolves and more exciting GO Fest updates!", date: "2026-04-28", category: "go-fest", eventStart: "2026-05-16", eventEnd: "2026-07-13" },
 ];

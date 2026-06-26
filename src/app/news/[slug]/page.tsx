@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
@@ -459,6 +460,40 @@ export default async function NewsArticle({ params }: { params: Promise<{ slug: 
                 );
               })}
             </div>
+
+            {/* Graphic CTA — download the matching hundo-CP infographic */}
+            {item.graphicHref && (
+              <Link
+                href={item.graphicHref}
+                className="group mt-8 flex overflow-hidden rounded-2xl border border-indigo-200 bg-linear-to-r from-indigo-900 to-violet-900 shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl dark:border-indigo-500/30"
+              >
+                {item.graphicPreview && (
+                  <div className="relative hidden w-28 shrink-0 sm:block">
+                    <Image
+                      src={item.graphicPreview}
+                      alt=""
+                      fill
+                      sizes="112px"
+                      className="object-cover opacity-80 group-hover:opacity-100 transition"
+                    />
+                  </div>
+                )}
+                <div className="flex flex-1 items-center gap-4 px-5 py-4">
+                  <Icon name="image" className="h-8 w-8 shrink-0 text-indigo-300" aria-hidden />
+                  <div className="min-w-0">
+                    <p className="font-semibold text-white">Download the Hundo CP Graphic</p>
+                    <p className="text-sm text-indigo-200">
+                      Shareable infographic with catch CPs — perfect for your group chat.
+                    </p>
+                  </div>
+                  <Icon
+                    name="arrowRight"
+                    className="ml-auto shrink-0 text-indigo-300 transition group-hover:translate-x-1 group-hover:text-white"
+                    aria-hidden
+                  />
+                </div>
+              </Link>
+            )}
 
             {/* Related Trainer tips */}
             {tipGroup && (
