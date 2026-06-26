@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getEggs, eggsByDistance, eggDistanceColor, type Egg } from "@/lib/eggs";
 
 export const revalidate = 3600;
@@ -78,8 +79,7 @@ function EggMon({ egg }: { egg: Egg }) {
   return (
     <div className="flex flex-col items-center rounded-2xl bg-white/10 px-2 pb-2 pt-1.5 ring-1 ring-white/15">
       <div className="relative">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={egg.image} alt={egg.name} className="h-[72px] w-[72px] object-contain drop-shadow-md" />
+        <Image src={egg.image} alt={egg.name} width={72} height={72} className="h-[72px] w-[72px] object-contain drop-shadow-md" unoptimized />
         {egg.canBeShiny && <span className="absolute right-0 top-0 text-base text-amber-300 drop-shadow">✨</span>}
       </div>
       <p className="max-w-full truncate text-center text-xs font-bold leading-tight">{egg.name}</p>

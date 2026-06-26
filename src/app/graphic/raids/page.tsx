@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getRaids, tierMeta, tierRank, type Raid } from "@/lib/raids";
 import { isShadowName } from "@/lib/pokedex";
 import ShadowBadge from "@/components/ShadowBadge";
@@ -97,8 +98,7 @@ export default async function RaidGraphic() {
               </h2>
               <div className="mt-3 flex flex-wrap justify-center gap-3">
                 {shinies.map((r) => (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img key={r.name} src={r.image} alt={r.name} className="h-14 w-14 object-contain drop-shadow" />
+                  <Image key={r.name} src={r.image} alt={r.name} width={56} height={56} className="h-14 w-14 object-contain drop-shadow" unoptimized />
                 ))}
               </div>
             </>
@@ -126,8 +126,7 @@ function Mon({ raid }: { raid: Raid }) {
   return (
     <div className="flex flex-col items-center rounded-2xl bg-white/10 px-2 pb-2.5 pt-2 ring-1 ring-white/15 backdrop-blur-sm">
       <div className="relative">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={raid.image} alt={raid.name} className="h-[104px] w-[104px] object-contain drop-shadow-lg" />
+        <Image src={raid.image} alt={raid.name} width={104} height={104} className="h-[104px] w-[104px] object-contain drop-shadow-lg" unoptimized />
         {shadow && (
           <span className="absolute left-0 top-0">
             <ShadowBadge size={6} />

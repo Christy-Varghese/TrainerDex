@@ -4,6 +4,7 @@ import { tierMeta } from "@/lib/raids";
 import { findByName } from "@/lib/pokedex";
 import Icon from "./Icon";
 import SpriteImage from "./SpriteImage";
+import ShadowBadge from "./ShadowBadge";
 
 /**
  * One raid boss. The headline number is the "hundo" CP — the CP a 15/15/15
@@ -19,11 +20,20 @@ export default function RaidCard({ raid }: { raid: Raid }) {
   const hundoBoosted = raid.combatPower.boosted.max;
   const dex = findByName(raid.name)?.dex;
 
+  const isShadow = raid.name.startsWith("Shadow ");
+  const isMega = !isShadow && raid.name.startsWith("Mega ");
+  const displayName = isShadow ? raid.name.slice(7) : isMega ? raid.name.slice(5) : raid.name;
+
   const body = (
     <>
       <div className="flex items-start gap-3">
-        <div className={`grid h-16 w-16 shrink-0 place-items-center rounded-xl bg-slate-100 ring-2 dark:bg-white/10 ${meta.ring}`}>
-          <SpriteImage src={raid.image} alt={raid.name} size={56} className="h-14 w-14 drop-shadow-sm" />
+        <div className={`relative grid h-16 w-16 shrink-0 place-items-center rounded-xl bg-slate-100 ring-2 dark:bg-white/10 ${meta.ring}`}>
+          <SpriteImage src={raid.image} alt={displayName} size={56} className="h-14 w-14 drop-shadow-sm" />
+          {isShadow && (
+            <span className="absolute -bottom-2 -right-2">
+              <ShadowBadge size={4} />
+            </span>
+          )}
         </div>
 
         <div className="min-w-0 flex-1">
@@ -35,7 +45,7 @@ export default function RaidCard({ raid }: { raid: Raid }) {
               </span>
             )}
           </div>
-          <h3 className="truncate font-semibold text-slate-900 dark:text-white">{raid.name}</h3>
+          <h3 className="truncate font-semibold text-slate-900 dark:text-white">{displayName}</h3>
           <div className="mt-1 flex flex-wrap gap-1">
             {raid.types.map((t) => (
               <span key={t.name} className="rounded-md bg-slate-100 px-1.5 py-0.5 text-[11px] font-medium capitalize text-slate-600 dark:bg-white/10 dark:text-slate-300">

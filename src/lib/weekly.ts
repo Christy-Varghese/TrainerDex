@@ -5,7 +5,7 @@
 // current egg pool by the poster itself.
 
 import { getEvents, typeMeta } from "./events";
-import { contextHundo, findByName, hundoCpAt, isShadowName, spriteUrl } from "./pokedex";
+import { contextHundo, findByName, hundoCpAt, isMegaName, isShadowName, megaSpriteUrl, spriteUrl } from "./pokedex";
 import { hasEnded, parseLocal } from "./time";
 import type { PogoEvent } from "./types";
 
@@ -112,13 +112,14 @@ export async function getWeeks(maxWeeks = 6): Promise<WeekData[]> {
         if (seen.has(dedupe)) continue;
         seen.add(dedupe);
         const shadow = isShadowName(raw.name);
+        const mega = isMegaName(raw.name);
         const h = contextHundo(dex, e.eventType, shadow);
         bySource.set(src, [
           ...(bySource.get(src) ?? []),
           {
             name: raw.name.replace(/^shadow\s+/i, ""),
             dex: dex.dex,
-            sprite: spriteUrl(dex.dex),
+            sprite: mega ? megaSpriteUrl(raw.name, dex.dex) : spriteUrl(dex.dex),
             primaryCp: h.cp,
             secondaryCp: shadow ? hundoCpAt(dex, 13) : h.boostedCp,
             secondaryLabel: shadow ? "Giovanni" : "☀️",

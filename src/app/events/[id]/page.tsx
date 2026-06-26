@@ -21,7 +21,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({
   params,
-}: PageProps<"/events/[id]">): Promise<Metadata> {
+}: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
   const event = await getEvent(id);
   if (!event) return { title: "Event not found — TrainerDex" };
@@ -31,7 +31,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function EventDetail({ params }: PageProps<"/events/[id]">) {
+export default async function EventDetail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const event = await getEvent(id);
   if (!event) notFound();

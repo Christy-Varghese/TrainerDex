@@ -5,6 +5,7 @@ import Link from "next/link";
 import Icon from "./Icon";
 import SpriteImage from "./SpriteImage";
 import { spriteUrl } from "@/lib/pokedex";
+import { tierMeta } from "@/lib/raids";
 import type { RoLDay } from "@/lib/road-of-legends";
 
 export interface WeekBoss {
@@ -13,6 +14,18 @@ export interface WeekBoss {
   dex?: number;
   tier?: string;
   canBeShiny: boolean;
+  /** L20 hundo (100% IV) catch CP — what the trainer sees on the encounter screen. */
+  cp?: number;
+  /** L25 hundo CP — weather-boosted raid catch. */
+  boostedCp?: number;
+  /** Pokémon types (for type badges and weather boost derivation). */
+  types?: string[];
+  /** Weather conditions that boost this boss (derived from types). */
+  weatherBoost?: string[];
+  /** ISO date string for single-day events (Raid Day, Raid Hour). */
+  eventDate?: string;
+  /** Human-readable window, e.g. "2:00 – 5:00 PM" for Raid Days or "6:00 – 7:00 PM" for Raid Hours. */
+  eventTime?: string;
 }
 
 export interface RaidWeek {
@@ -79,16 +92,22 @@ export default function RaidCalendar({ weeks }: { weeks: RaidWeek[] }) {
   );
 }
 
-function BossCard({ name, image, dex, tier, shiny }: { name: string; image: string; dex?: number; tier?: string; shiny: boolean }) {
+function BossCard({ name, image, dex, tier, shiny, cp }: { name: string; image: string; dex?: number; tier?: string; shiny: boolean; cp?: number }) {
+  const tm = tier ? tierMeta(tier) : null;
   const inner = (
     <>
-      {tier && (
-        <span className="mb-1 rounded-full bg-rose-100 px-2 py-0.5 text-[11px] font-bold text-rose-700 dark:bg-rose-500/15 dark:text-rose-300">
-          {tier}
+      {tm && (
+        <span className={`mb-1 rounded-full px-2 py-0.5 text-[11px] font-bold ${tm.badge}`}>
+          {tm.short}
         </span>
       )}
       <SpriteImage src={image} alt={name} size={64} className="h-16 w-16" />
-      <p className="mt-1 line-clamp-2 text-sm font-semibold text-slate-900 dark:text-white">{name}</p>
+      <p className="mt-1 line-clamp-2 text-center text-sm font-semibold text-slate-900 dark:text-white">{name}</p>
+      {cp !== undefined && (
+        <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+          Hundo <span className="font-bold text-slate-700 dark:text-slate-200">{cp.toLocaleString()}</span>
+        </p>
+      )}
       {shiny && (
         <span className="inline-flex items-center gap-0.5 text-[11px] text-amber-500">
           <Icon name="sparkles" /> shiny
@@ -111,7 +130,7 @@ function BossGrid({ bosses }: { bosses: WeekBoss[] }) {
   return (
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
       {bosses.map((b) => (
-        <BossCard key={b.name} name={b.name} image={b.image} dex={b.dex} tier={b.tier} shiny={b.canBeShiny} />
+        <BossCard key={b.name} name={b.name} image={b.image} dex={b.dex} tier={b.tier} shiny={b.canBeShiny} cp={b.cp} />
       ))}
     </div>
   );

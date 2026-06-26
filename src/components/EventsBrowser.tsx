@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { EventType, PogoEvent } from "@/lib/types";
 import { typeMeta } from "@/lib/events";
 import EventCard from "./EventCard";
+import EmptyState from "./EmptyState";
 import Icon, { type IconName } from "./Icon";
 
 /** A labeled, time-proximity group of events (e.g. "Ends Today"). */
@@ -108,20 +109,34 @@ export default function EventsBrowser({ happeningNow, upcoming, past = [], types
       )}
 
       {/* Happening Now */}
-      <Section title="Happening Now" icon="flame" groups={now} featured>
-        Nothing live right now. See what&apos;s coming up below.
-      </Section>
+      <Section
+        title="Happening Now"
+        icon="flame"
+        groups={now}
+        featured
+        emptyTitle="Nothing live right now"
+        emptyHint="Events will appear here as they go live. Check what's coming up below."
+      />
 
       {/* Upcoming */}
-      <Section title="Upcoming Events" icon="calendar" groups={next}>
-        Nothing scheduled in this window. Check back soon.
-      </Section>
+      <Section
+        title="Upcoming Events"
+        icon="calendar"
+        groups={next}
+        emptyTitle="Nothing scheduled yet"
+        emptyHint="Check back soon — upcoming events will appear here when announced."
+      />
 
       {/* Past events this month — kept for reference, visually dimmed. */}
       {prev.length > 0 && (
-        <Section title="Past Events This Month" icon="hourglass" groups={prev} muted>
-          No completed events yet this month.
-        </Section>
+        <Section
+          title="Past Events This Month"
+          icon="hourglass"
+          groups={prev}
+          muted
+          emptyTitle="No completed events yet"
+          emptyHint="Completed events from this month will appear here for reference."
+        />
       )}
     </>
   );
@@ -133,15 +148,16 @@ function Section({
   groups,
   featured = false,
   muted = false,
-  children,
+  emptyTitle,
+  emptyHint,
 }: {
   title: string;
   icon: IconName;
   groups: EventGroup[];
   featured?: boolean;
-  /** Dim the section (used for completed/past events). */
   muted?: boolean;
-  children: React.ReactNode;
+  emptyTitle: string;
+  emptyHint?: string;
 }) {
   return (
     <section className="mb-10">
@@ -162,9 +178,7 @@ function Section({
           </div>
         ))
       ) : (
-        <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-8 text-center text-sm text-slate-400">
-          {children}
-        </div>
+        <EmptyState icon={icon} title={emptyTitle} hint={emptyHint} />
       )}
     </section>
   );
@@ -197,7 +211,7 @@ function FilterPill({
       type="button"
       onClick={onClick}
       className={[
-        "whitespace-nowrap rounded-full px-3.5 py-1.5 text-sm font-medium transition",
+        "whitespace-nowrap rounded-full px-3.5 py-1.5 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400",
         active
           ? "bg-slate-900 text-white shadow-sm"
           : "border border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:text-slate-900",

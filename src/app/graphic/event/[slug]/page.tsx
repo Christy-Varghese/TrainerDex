@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getArticle, getNewsItem } from "@/lib/news";
 import { extractPokemon, hundoCpAt, spriteUrl } from "@/lib/pokedex";
@@ -23,12 +24,12 @@ export async function generateStaticParams() {
   return Object.keys(POSTERS).map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({ params }: PageProps<"/graphic/event/[slug]">) {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   return { title: `${POSTERS[slug]?.title ?? "Event"} — TrainerDex Graphic` };
 }
 
-export default async function EventGraphic({ params }: PageProps<"/graphic/event/[slug]">) {
+export default async function EventGraphic({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const cfg = POSTERS[slug];
   const item = getNewsItem(slug);
@@ -79,8 +80,7 @@ export default async function EventGraphic({ params }: PageProps<"/graphic/event
                   className="flex flex-col items-center rounded-2xl bg-white/10 px-2 pb-2.5 pt-2 ring-1 ring-white/15 backdrop-blur-sm"
                 >
                   <div className="relative">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={spriteUrl(p.dex)} alt={p.name} className="h-24 w-24 object-contain drop-shadow-lg" />
+                    <Image src={spriteUrl(p.dex)} alt={p.name} width={96} height={96} className="h-24 w-24 object-contain drop-shadow-lg" unoptimized />
                     {shadow && (
                       <span className="absolute left-0 top-0">
                         <ShadowBadge size={6} />

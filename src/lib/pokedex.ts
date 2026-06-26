@@ -94,6 +94,10 @@ export interface MentionedPokemon {
   pokemon: Pokemon;
   /** True when the name appeared as a Shadow Pokémon ("Shadow Reshiram"). */
   shadow: boolean;
+  /** True when the name appeared as a Mega/Primal form ("Mega Rayquaza"). */
+  mega: boolean;
+  /** The full mega name used to resolve the correct sprite ("Mega Mewtwo X"). */
+  megaFullName: string;
 }
 
 /**
@@ -113,9 +117,25 @@ export function extractPokemon(texts: string[], cap = 16): MentionedPokemon[] {
         const hit = BY_NAME.get(key);
         if (hit) {
           const shadow = i > 0 && words[i - 1].toLowerCase() === "shadow";
+          const megaPrefix = i > 0 && /^(mega|primal)$/i.test(words[i - 1]);
+          let megaFullName = "";
+          if (megaPrefix) {
+            const prefix = words[i - 1];
+            const pokeName = words.slice(i, i + n).join(" ");
+            const nextWord = words[i + n];
+            const variant = nextWord && /^[XY]$/i.test(nextWord) ? ` ${nextWord}` : "";
+            megaFullName = `${prefix} ${pokeName}${variant}`;
+          }
           const existing = found.get(hit.dex);
-          if (!existing) found.set(hit.dex, { pokemon: hit, shadow });
-          else if (shadow) existing.shadow = true; // promote if any mention is Shadow
+          if (!existing) {
+            found.set(hit.dex, { pokemon: hit, shadow, mega: megaPrefix, megaFullName });
+          } else {
+            if (shadow) existing.shadow = true;
+            if (megaPrefix && !existing.mega) {
+              existing.mega = true;
+              existing.megaFullName = megaFullName;
+            }
+          }
           break;
         }
       }
@@ -128,6 +148,33 @@ export function extractPokemon(texts: string[], cap = 16): MentionedPokemon[] {
 /** True if a display name denotes a Shadow Pokémon. */
 export function isShadowName(name: string): boolean {
   return /\bshadow\b/i.test(name);
+}
+
+/** True if a display name denotes a Mega or Primal form. */
+export function isMegaName(name: string): boolean {
+  return /^(mega|primal)\s+/i.test(name);
+}
+
+const POKEMINERS_BASE =
+  "https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Images/Pokemon/Addressable%20Assets";
+
+// Local sprites for mega forms where we have better or locally-provided art.
+const MEGA_SPRITE_LOCAL: Record<string, string> = {
+  "mega mewtwo x": "/sprites/mega-mewtwo-x.png",
+  "mega mewtwo y": "/sprites/mega-mewtwo-y.png",
+};
+
+/**
+ * Resolve the correct sprite for a named Mega / Primal form.
+ * Falls back gracefully — SpriteImage shows a Poké Ball placeholder on 404.
+ */
+export function megaSpriteUrl(name: string, dex: number): string {
+  const lower = name.trim().toLowerCase();
+  if (MEGA_SPRITE_LOCAL[lower]) return MEGA_SPRITE_LOCAL[lower];
+  if (/\bprimal\b/i.test(name)) return `${POKEMINERS_BASE}/pm${dex}.fPRIMAL.icon.png`;
+  if (/\s+x\s*$/i.test(name)) return `${POKEMINERS_BASE}/pm${dex}.fMEGA_X.icon.png`;
+  if (/\s+y\s*$/i.test(name)) return `${POKEMINERS_BASE}/pm${dex}.fMEGA_Y.icon.png`;
+  return `${POKEMINERS_BASE}/pm${dex}.fMEGA.icon.png`;
 }
 
 // ---- Hundo (100% IV) CP by catch scenario --------------------------------

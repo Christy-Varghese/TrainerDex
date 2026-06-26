@@ -186,7 +186,7 @@ function TypePill({
       type="button"
       onClick={onClick}
       className={[
-        "whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-medium transition",
+        "whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400",
         active ? `${cls} shadow-sm` : "border border-slate-200 bg-white text-slate-600 hover:border-slate-300",
       ].join(" ")}
     >

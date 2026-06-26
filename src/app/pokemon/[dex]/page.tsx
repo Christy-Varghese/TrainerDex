@@ -19,7 +19,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({
   params,
-}: PageProps<"/pokemon/[dex]">): Promise<Metadata> {
+}: { params: Promise<{ dex: string }> }): Promise<Metadata> {
   const { dex } = await params;
   const p = getPokemon(Number(dex));
   if (!p) return { title: "Pokémon not found — TrainerDex" };
@@ -37,7 +37,7 @@ const STATS = [
   { key: "sta", label: "Stamina", color: "bg-emerald-400" },
 ] as const;
 
-export default async function PokemonDetail({ params }: PageProps<"/pokemon/[dex]">) {
+export default async function PokemonDetail({ params }: { params: Promise<{ dex: string }> }) {
   const { dex } = await params;
   const p = getPokemon(Number(dex));
   if (!p) notFound();
@@ -274,32 +274,49 @@ export default async function PokemonDetail({ params }: PageProps<"/pokemon/[dex
                   <Icon name="shield" className="text-sky-500" /> Best counters (Level 40)
                 </h2>
                 <p className="mb-3 text-xs text-slate-400">
-                  Top attackers vs {p.name}&apos;s typing, rated at L40. The chip shows the super-effective
-                  type each one brings.
+                  Top attackers vs {p.name}&apos;s typing, rated at L40. Fast · Charged moves shown where curated.
                 </p>
                 <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-                  {counters.map((c, i) => (
-                    <Link
-                      key={c.pokemon.dex}
-                      href={`/pokemon/${c.pokemon.dex}`}
-                      className="group flex items-center gap-2.5 rounded-xl border border-slate-200 p-2 transition hover:-translate-y-0.5 hover:border-sky-300 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 dark:border-white/10"
-                    >
-                      <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-slate-100 text-[11px] font-bold text-slate-500 dark:bg-white/10 dark:text-slate-300">
-                        {i + 1}
-                      </span>
-                      <SpriteImage src={spriteUrl(c.pokemon.dex)} alt={c.pokemon.name} size={40} className="h-10 w-10 shrink-0" />
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">{c.pokemon.name}</p>
-                        <div className="mt-0.5 flex items-center gap-1">
-                          <span className={`rounded px-1 py-px text-[9px] font-medium ${typeColor(c.bestType)}`}>{c.bestType}</span>
-                          <span className="text-[10px] text-slate-400">CP {c.cp.toLocaleString()}</span>
-                        </div>
-                        <span className="mt-1 block h-1 overflow-hidden rounded-full bg-slate-100 dark:bg-white/10">
-                          <span className="block h-full rounded-full bg-sky-400" style={{ width: `${c.score}%` }} />
+                  {counters.map((c, i) => {
+                    const rawLabel = c.displayName ?? c.pokemon.name;
+                    const isShadowCounter = rawLabel.startsWith("Shadow ");
+                    const label = isShadowCounter ? rawLabel.slice(7) : rawLabel;
+                    const src = c.sprite ?? spriteUrl(c.pokemon.dex);
+                    return (
+                      <Link
+                        key={`${c.pokemon.dex}-${rawLabel}`}
+                        href={`/pokemon/${c.pokemon.dex}`}
+                        className="group flex items-center gap-2.5 rounded-xl border border-slate-200 p-2 transition hover:-translate-y-0.5 hover:border-sky-300 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 dark:border-white/10"
+                      >
+                        <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-slate-100 text-[11px] font-bold text-slate-500 dark:bg-white/10 dark:text-slate-300">
+                          {i + 1}
                         </span>
-                      </div>
-                    </Link>
-                  ))}
+                        <div className="relative shrink-0">
+                          <SpriteImage src={src} alt={label} size={40} className="h-10 w-10" />
+                          {isShadowCounter && (
+                            <span className="absolute -bottom-1.5 -right-1.5">
+                              <ShadowBadge size={4} />
+                            </span>
+                          )}
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">{label}</p>
+                          {c.fastMove && c.chargedMove && (
+                            <p className="truncate text-[10px] text-slate-500 dark:text-slate-400">
+                              {c.fastMove} · {c.chargedMove}
+                            </p>
+                          )}
+                          <div className="mt-0.5 flex items-center gap-1">
+                            <span className={`rounded px-1 py-px text-[9px] font-medium ${typeColor(c.bestType)}`}>{c.bestType}</span>
+                            <span className="text-[10px] text-slate-400">CP {c.cp.toLocaleString()}</span>
+                          </div>
+                          <span className="mt-1 block h-1 overflow-hidden rounded-full bg-slate-100 dark:bg-white/10">
+                            <span className="block h-full rounded-full bg-sky-400" style={{ width: `${c.score}%` }} />
+                          </span>
+                        </div>
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
             )}

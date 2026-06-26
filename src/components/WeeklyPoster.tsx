@@ -1,3 +1,4 @@
+import Image from "next/image";
 import ShadowBadge from "./ShadowBadge";
 import type { WeekData, WeekMon } from "@/lib/weekly";
 
@@ -102,8 +103,7 @@ function MonCard({ mon }: { mon: WeekMon }) {
     <div className="flex flex-col items-center rounded-2xl bg-white/10 px-2 pb-2.5 pt-2 ring-1 ring-white/15 backdrop-blur-sm">
       <div className="relative">
         {mon.sprite && (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img src={mon.sprite} alt={mon.name} className="h-24 w-24 object-contain drop-shadow-lg" />
+          <Image src={mon.sprite} alt={mon.name} width={96} height={96} className="h-24 w-24 object-contain drop-shadow-lg" unoptimized />
         )}
         {mon.shadow && (
           <span className="absolute left-0 top-0">

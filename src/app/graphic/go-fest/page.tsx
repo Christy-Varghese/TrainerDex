@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { typeColor } from "@/lib/pokedex";
 
 export const revalidate = 3600;
@@ -89,8 +90,7 @@ export default function GoFestGraphic() {
                 key={h.name}
                 className="flex flex-col items-center rounded-2xl bg-white/10 px-2 pb-2.5 pt-2 ring-1 ring-white/15 backdrop-blur-sm"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={h.sprite} alt={h.name} className="h-20 w-20 object-contain drop-shadow-lg" />
+                <Image src={h.sprite} alt={h.name} width={80} height={80} className="h-20 w-20 object-contain drop-shadow-lg" unoptimized />
                 <p className="text-center text-sm font-bold leading-tight">{h.name}</p>
                 <p className="mt-0.5 text-center text-[11px] font-semibold text-amber-200">{h.tag}</p>
               </div>
@@ -137,8 +137,7 @@ export default function GoFestGraphic() {
                 className="flex flex-col items-center rounded-xl bg-white/10 px-1.5 pb-2 pt-1.5 ring-1 ring-white/15"
               >
                 <div className="relative">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={w.sprite} alt={w.name} className="h-16 w-16 object-contain drop-shadow-lg" />
+                  <Image src={w.sprite} alt={w.name} width={64} height={64} className="h-16 w-16 object-contain drop-shadow-lg" unoptimized />
                   {w.rare && (
                     <span className="absolute -right-1 top-0 rounded bg-black/80 px-1 text-[8px] font-bold text-amber-300">
                       rare

@@ -603,7 +603,7 @@
   },
   {
     "dex": 29,
-    "name": "Nidoran♀",
+    "name": "Nidoran\u2640",
     "types": [
       "Poison"
     ],
@@ -658,7 +658,7 @@
   },
   {
     "dex": 32,
-    "name": "Nidoran♂",
+    "name": "Nidoran\u2642",
     "types": [
       "Poison"
     ],
@@ -1842,7 +1842,7 @@
   },
   {
     "dex": 83,
-    "name": "Farfetch’d",
+    "name": "Farfetch\u2019d",
     "types": [
       "Normal",
       "Flying"
@@ -9684,20 +9684,21 @@
   },
   {
     "dex": 487,
-    "name": "Giratina Altered",
+    "name": "Giratina",
     "types": [
       "Ghost",
       "Dragon"
     ],
-    "atk": 0,
-    "def": 0,
-    "sta": 0,
-    "maxCp": 0,
+    "atk": 187,
+    "def": 225,
+    "sta": 284,
+    "maxCp": 3379,
     "region": "Sinnoh",
-    "shiny": false,
-    "shinyMethods": [],
-    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/487.png",
-    "inGo": false
+    "shiny": true,
+    "shinyMethods": [
+      "Raid"
+    ],
+    "inGo": true
   },
   {
     "dex": 488,

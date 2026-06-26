@@ -27,7 +27,8 @@ export type IconName =
   | "ghost"
   | "globe"
   | "check"
-  | "info";
+  | "info"
+  | "shadow";
 
 type Props = SVGProps<SVGSVGElement> & {
   name: IconName;
@@ -120,6 +121,8 @@ const PATHS: Record<IconName, React.ReactNode> = {
       <path d="M12 16v-4M12 8h.01" />
     </>
   ),
+  // Dark crystal shard — visual marker for Shadow Pokémon (matches GO's shadow aura shape)
+  shadow: <path d="M12 2 8.5 9H3l5 4.5L6 21l6-3.5 6 3.5-2-7.5L21 9h-5.5L12 2Z" />,
 };
 
 export default function Icon({ name, title, ...rest }: Props) {

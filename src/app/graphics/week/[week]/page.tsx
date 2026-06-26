@@ -9,14 +9,14 @@ export async function generateStaticParams() {
   return weeks.map((w) => ({ week: w.id }));
 }
 
-export async function generateMetadata({ params }: PageProps<"/graphics/week/[week]">) {
+export async function generateMetadata({ params }: { params: Promise<{ week: string }> }) {
   const { week } = await params;
   const w = await getWeek(week);
   return { title: w ? `Weekly Hundo CP · ${w.label} — TrainerDex` : "Weekly graphic — TrainerDex" };
 }
 
 // Bare poster on its own page — used for full-size viewing and PNG capture.
-export default async function WeekGraphicPage({ params }: PageProps<"/graphics/week/[week]">) {
+export default async function WeekGraphicPage({ params }: { params: Promise<{ week: string }> }) {
   const { week } = await params;
   const w = await getWeek(week);
   if (!w) notFound();

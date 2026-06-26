@@ -56,8 +56,8 @@ export interface MegaInfo {
 // only when the live feed doesn't already carry that form.
 const MEGA_SUPPLEMENT: Record<number, Omit<MegaInfo, "cp">[]> = {
   150: [
-    { form: "X", name: "Mega Mewtwo X", atk: 394, def: 214, sta: 214, types: ["Psychic", "Fighting"], datamined: true, sprite: "/sprites/mega-mewtwo-x.png" },
-    { form: "Y", name: "Mega Mewtwo Y", atk: 446, def: 212, sta: 214, types: ["Psychic"], datamined: true, sprite: "/sprites/mega-mewtwo-y.png" },
+    { form: "X", name: "Mega Mewtwo X", atk: 399, def: 215, sta: 228, types: ["Psychic", "Fighting"], sprite: "/sprites/mega-mewtwo-x.png" },
+    { form: "Y", name: "Mega Mewtwo Y", atk: 413, def: 223, sta: 228, types: ["Psychic"], sprite: "/sprites/mega-mewtwo-y.png" },
   ],
 };
 

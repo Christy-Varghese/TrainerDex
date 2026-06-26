@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { contextHundo, findByName, isShadowName, spriteUrl, typeColor } from "@/lib/pokedex";
+import { contextHundo, findByName, isMegaName, isShadowName, megaSpriteUrl, spriteUrl, typeColor } from "@/lib/pokedex";
 import { isSpecialBackground } from "@/lib/special";
 import { shinyOddsFor } from "@/lib/shiny";
 import type { EventType } from "@/lib/types";
@@ -26,8 +26,13 @@ interface Props {
 export default function FeaturedMon({ name, image, canBeShiny, eventType, context }: Props) {
   const dex = findByName(name);
   const odds = shinyOddsFor(eventType, canBeShiny);
-  const art = dex ? spriteUrl(dex.dex) : image;
   const shadow = isShadowName(name);
+  const mega = isMegaName(name);
+  const art = dex
+    ? mega
+      ? megaSpriteUrl(name, dex.dex)
+      : spriteUrl(dex.dex)
+    : image;
   const specialBg = dex ? isSpecialBackground(dex.dex) : false;
   // The shadow-fire image marks Shadow Pokémon, so drop the word from the label.
   const displayName = name.replace(/^shadow\s+/i, "");

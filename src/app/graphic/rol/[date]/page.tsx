@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getRoadOfLegendsDays } from "@/lib/road-of-legends";
 import { getPokemon, hundoCpAt, spriteUrl } from "@/lib/pokedex";
@@ -10,7 +11,7 @@ export async function generateStaticParams() {
   return getRoadOfLegendsDays().map((d) => ({ date: d.date }));
 }
 
-export async function generateMetadata({ params }: PageProps<"/graphic/rol/[date]">) {
+export async function generateMetadata({ params }: { params: Promise<{ date: string }> }) {
   const { date } = await params;
   const day = getRoadOfLegendsDays().find((d) => d.date === date);
   return { title: `Road of Legends — ${day?.label ?? date} — TrainerDex Graphic` };
@@ -22,7 +23,7 @@ const TIER_STYLE: Record<string, string> = {
   Primal: "from-sky-500 to-blue-600",
 };
 
-export default async function RoLDayGraphic({ params }: PageProps<"/graphic/rol/[date]">) {
+export default async function RoLDayGraphic({ params }: { params: Promise<{ date: string }> }) {
   const { date } = await params;
   const days = getRoadOfLegendsDays();
   const day = days.find((d) => d.date === date);
@@ -87,8 +88,7 @@ export default async function RoLDayGraphic({ params }: PageProps<"/graphic/rol/
                         className="flex flex-col items-center rounded-xl bg-white/10 px-1.5 pb-2 pt-1.5 ring-1 ring-white/15 backdrop-blur-sm"
                       >
                         <div className="relative">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={sprite} alt={b.name} className="h-16 w-16 object-contain drop-shadow-lg" />
+                          <Image src={sprite} alt={b.name} width={64} height={64} className="h-16 w-16 object-contain drop-shadow-lg" unoptimized />
                           {b.shiny && (
                             <span className="absolute right-0 top-0 text-base text-amber-300 drop-shadow">✨</span>
                           )}

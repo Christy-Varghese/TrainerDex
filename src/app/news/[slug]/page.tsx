@@ -13,7 +13,7 @@ import {
   type ArticleBlock,
 } from "@/lib/news";
 import { getTipGroup, type TipCategory } from "@/lib/tips";
-import { extractPokemon, spriteUrl } from "@/lib/pokedex";
+import { extractPokemon, isMegaName, isShadowName, megaSpriteUrl, spriteUrl } from "@/lib/pokedex";
 import { findSpecialForm } from "@/lib/special-forms";
 import { isSpecialBackground } from "@/lib/special";
 import { bonusIcon, bonusSprite } from "@/lib/bonus-icons";
@@ -28,7 +28,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({
   params,
-}: PageProps<"/news/[slug]">): Promise<Metadata> {
+}: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const item = getNewsItem(slug);
   if (!item) return { title: "News not found — TrainerDex" };
@@ -45,6 +45,7 @@ interface BossLine {
   sprite: string;
   dex?: number;
   shiny: boolean;
+  shadow: boolean;
 }
 
 // A schedule paragraph (e.g. Road of Legends) is a single Pokémon name, maybe
@@ -61,12 +62,20 @@ function pokemonLine(text: string): BossLine | null {
   if (!core || core.split(/\s+/).length > 6 || /[,:;]/.test(core)) return null;
 
   const sf = findSpecialForm(core);
-  if (sf) return { name: core, sprite: sf.sprite, dex: sf.baseDex, shiny };
+  if (sf) return { name: core, sprite: sf.sprite, dex: sf.baseDex, shiny, shadow: false };
 
-  const mons = extractPokemon([core], 1);
+  // Strip shadow prefix for display; flag for ShadowBadge overlay.
+  const shadow = isShadowName(core);
+  const stripped = core.replace(/^shadow\s+/i, "");
+
+  const mons = extractPokemon([stripped], 1);
   if (mons.length === 0) return null;
   const p = mons[0].pokemon;
-  return { name: core, sprite: spriteUrl(p.dex), dex: p.dex, shiny };
+
+  const mega = isMegaName(stripped);
+  const sprite = mega ? megaSpriteUrl(stripped, p.dex) : spriteUrl(p.dex);
+
+  return { name: stripped, sprite, dex: p.dex, shiny, shadow };
 }
 
 // News category → relevant Trainer-tip group shown alongside the article.
@@ -173,7 +182,7 @@ function sectionTags(blocks: ArticleBlock[]): string[] {
 
 const tagSlug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
-export default async function NewsArticle({ params }: PageProps<"/news/[slug]">) {
+export default async function NewsArticle({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const item = getNewsItem(slug);
   const blocks = getArticle(slug);
@@ -288,7 +297,7 @@ export default async function NewsArticle({ params }: PageProps<"/news/[slug]">)
                 Pokémon in this update
               </p>
               <div className="flex flex-wrap gap-2">
-                {mentioned.map(({ pokemon: p, shadow }) => (
+                {mentioned.map(({ pokemon: p, shadow, mega, megaFullName }) => (
                   <Link
                     key={p.dex}
                     href={`/pokemon/${p.dex}`}
@@ -296,7 +305,12 @@ export default async function NewsArticle({ params }: PageProps<"/news/[slug]">)
                     className="group flex w-16 flex-col items-center gap-0.5 rounded-xl border border-slate-200 bg-white p-2 text-center transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-sm"
                   >
                     <div className="relative h-10 w-10">
-                      <SpriteImage src={spriteUrl(p.dex)} alt={p.name} size={40} className="h-10 w-10" />
+                      <SpriteImage
+                        src={mega ? megaSpriteUrl(megaFullName || p.name, p.dex) : spriteUrl(p.dex)}
+                        alt={p.name}
+                        size={40}
+                        className="h-10 w-10"
+                      />
                       {shadow && (
                         <span className="absolute -left-1.5 -top-1.5">
                           <ShadowBadge size={4} />
@@ -337,6 +351,11 @@ export default async function NewsArticle({ params }: PageProps<"/news/[slug]">)
                           <>
                             <span className="relative grid h-14 w-14 place-items-center rounded-lg bg-white shadow-sm dark:bg-white/10">
                               <SpriteImage src={boss.sprite} alt={boss.name} size={48} className="h-12 w-12" />
+                              {boss.shadow && (
+                                <span className="absolute left-0.5 top-0.5">
+                                  <ShadowBadge size={4} />
+                                </span>
+                              )}
                               {boss.shiny && (
                                 <span className="absolute -right-1 -top-1 text-amber-400">
                                   <Icon name="sparkles" title="Shiny available" />
