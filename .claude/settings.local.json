@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s \"https://raw.githubusercontent.com/bigfoott/ScrapedDuck/data/raids.json\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('count',len\\(d\\)\\); print\\(json.dumps\\(d[0],indent=1\\)[:900]\\)\")",
+      "Bash(curl -s \"https://raw.githubusercontent.com/bigfoott/ScrapedDuck/data/events.json\")",
+      "Bash(python3 -c 'import sys,json; d=json.load\\(sys.stdin\\); print\\('\\\\''count'\\\\'',len\\(d\\)\\); print\\('\\\\''keys'\\\\'',list\\(d[0].keys\\(\\)\\)\\); xs=[e for e in d if e.get\\('\\\\''extraData'\\\\''\\)]; print\\('\\\\''with_extra'\\\\'',len\\(xs\\)\\); *)",
+      "Bash(npx next *)"
+    ]
+  }
+}

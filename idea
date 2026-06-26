@@ -1,0 +1,701 @@
+# TrainerDex — The Ultimate Pokémon GO Companion
+
+I genuinely think this has the potential to become one of the best Pokémon GO companion websites if executed well.
+
+After reviewing your notes, this is clearly bigger than PokéGenie, LeekDuck, or PvPoke individually. Instead of solving only one problem, the goal is to build a **Trainer Operating System**: one place where trainers don't need to jump across 10 different websites.
+
+That's a strong direction because today the Pokémon GO community constantly switches between:
+
+- Official Pokémon GO website
+- LeekDuck
+- PvPoke
+- Pokebattler
+- GO Hub
+- Reddit
+- X (Twitter)
+- YouTube
+- Campfire
+
+TrainerDex can unify all of these workflows.
+
+---
+
+## Master Project Prompt
+
+### Project Overview
+
+Design and develop a premium web application called **TrainerDex**.
+
+TrainerDex should become the all-in-one platform every Pokémon GO trainer uses daily.
+
+It should combine the following into one beautiful ecosystem:
+
+- Pokédex
+- Events
+- Raid Guides
+- PvP Team Builder
+- Graphics
+- News
+- Tips
+- Leaks
+- Counters
+- Research
+- Collection Tracker
+- Community
+
+The product should feel like an **official Pokémon GO application**, not a typical website.
+
+It should instantly communicate:
+
+> "Everything you need for Pokémon GO is here."
+
+---
+
+### Pokémon Sprites — Missing Assets
+
+Create a dedicated Markdown file (`missing-sprites.md`) that catalogues every Pokémon whose sprite asset is currently missing or unrenderable in the app.
+
+The file should include:
+
+- Pokémon name and Dex number
+- Which variants are missing (default, shiny, shadow, mega, regional, costume)
+- Source URL where the sprite should be fetched or confirmed
+- Status column (`missing` / `placeholder` / `resolved`)
+
+This file will act as a living checklist so contributors and the admin CMS can track sprite coverage and fill gaps systematically.
+
+---
+
+## Design Philosophy
+
+The UI should draw inspiration from:
+
+- Pokémon GO
+- Pokémon Scarlet/Violet
+- Apple Human Interface
+- Material 3
+- Modern Dashboard Design
+
+The experience must feel:
+
+- Immersive
+- Premium
+- Smooth
+- Animated
+- Responsive
+- Easy to navigate
+
+Core visual rules:
+
+- No clutter
+- No outdated tables
+- Card-based layouts
+- Soft gradients
+- Glassmorphism
+- Rounded corners
+- Excellent spacing
+- Motion animations
+
+---
+
+## Homepage (Trainer Dashboard)
+
+### Core sections
+
+- Hero section
+- Current season
+- Upcoming event countdown
+- Weather
+- Featured Pokémon
+- Latest news
+
+### Quick action buttons
+
+- Pokédex
+- Raid Bosses
+- PvP
+- Events
+- Research
+- Tips
+
+---
+
+## Live Dashboard
+
+- Current raid bosses
+- Spotlight Hour
+- Community Day
+- GO Battle League season
+- Rocket rotation
+- Current eggs
+- Current bonuses
+- Daily free box
+- Latest shiny release
+- Upcoming event countdown
+
+---
+
+## Quick Search
+
+A universal search where users can type:
+
+- Pikachu
+- Shadow Mewtwo
+- Community Day
+- Great League
+- Mega Gengar
+
+…and instantly navigate to the right destination.
+
+---
+
+## Pokédex
+
+Goal: become the best Pokédex online.
+
+### Pokémon page content
+
+- Header
+- Animated artwork
+- Shiny toggle
+- Shadow toggle
+- Purified toggle
+- Mega Evolution
+- Gigantamax
+- Regional forms
+- Gender differences
+- Costume forms
+
+### Stats
+
+- Max CP
+- Attack
+- Defense
+- HP
+- Buddy distance
+- Candy requirement
+- XL candy
+- Catch rate
+- Flee rate
+- Weight
+- Height
+- Typing
+- Weaknesses
+- Resistances
+- Weather boost
+
+### Availability
+
+- Currently available?
+- Wild
+- Egg
+- Raid
+- Research
+- Rocket
+- Daily incense
+- Routes
+- Event exclusive
+- Seasonal
+
+### Evolutions
+
+- Beautiful evolution tree
+- Candy cost
+- Special requirements
+- Trade evolution
+- Lure evolution
+- Adventure Together
+- Night/Day conditions
+- Friendship conditions
+
+### Moves
+
+- Fast moves
+- Charged moves
+- Elite TM moves
+- Legacy moves
+- Best moveset
+- PvP moves
+- PvE moves
+- Move animation
+- Energy
+- Damage
+- DPS
+- EPT
+- Turns
+
+### PvP block
+
+- Great League rank
+- Ultra League rank
+- Master League rank
+- Best IV
+- Best Buddy CP
+- Top counters
+- Common teams
+- Recommended shields
+
+### Raid block
+
+- Best raid attacker?
+- Mega boost
+- Counter score
+- Time to win
+- Players needed
+- Weather advantage
+
+### Shiny block
+
+- Availability
+- Release date
+- Odds
+- Comparison slider (normal vs shiny)
+
+### History block
+
+- Release date
+- All events appeared in
+- Costumes
+- Raid history
+- Community Days
+- Research Days
+- Season history
+
+### Gallery block
+
+- Official artwork
+- 3D model
+- Sprite
+- Shiny
+- Mega
+- Shadow
+- AR screenshot
+- Fan art
+
+---
+
+## Events
+
+Instead of starting with long articles, use an **infographic-first** approach.
+
+### Event card includes
+
+- Banner
+- Countdown
+- Dates
+- Bonuses (XP, Stardust, Candy)
+- Featured Pokémon
+- Raid bosses
+- Egg pool
+- Field research
+- Collection challenge
+- Shiny releases
+- Recommended Pokémon
+- Weather
+- Difficulty
+
+### Event detail page includes
+
+- Detailed article
+- Interactive schedule
+- Research rewards
+- Maps
+- Spawn lists
+- Graphics
+
+---
+
+## Raid Hub
+
+A live raid page with:
+
+- Weekly rotation
+- Mega raids
+- Shadow raids
+- Elite raids
+- Max battles
+
+Each raid page should include:
+
+- Difficulty
+- Weather
+- Best counters
+- Recommended teams
+- Top 50 attackers
+- Party Power guide
+- Players required
+- CP
+- Moves
+- Weather simulation
+- Win probability
+- Simulator
+
+---
+
+## PvP Center
+
+Built with PvPoke-level depth.
+
+Features:
+
+- League rankings
+- Team builder
+- Team analyzer
+- Safe switch suggestions
+- Lead suggestions
+- Shield scenarios
+- Battle simulation
+- Move counts
+- IV calculator
+- Ranking calculator
+- Core breaker detection
+- Meta report
+- Usage statistics
+- Top teams
+
+---
+
+## Graphics Library
+
+A downloadable and categorized gallery containing:
+
+- Infographics
+- Raid counters
+- Event graphics
+- Shiny checklists
+- Type charts
+- Season graphics
+- Wallpapers
+  - Phone wallpaper
+  - Desktop wallpaper
+
+---
+
+## News
+
+Modern magazine-style layout with:
+
+- News cards
+- Patch notes
+- Datamines
+- Developer posts
+- Blog articles
+- Video highlights
+
+---
+
+## Leaks
+
+Separate section for:
+
+- Latest datamines
+- Upcoming Pokémon
+- Upcoming shinies
+- Assets found
+- APK changes
+- Upcoming features
+- Timeline view
+- Confidence meter
+- Source credits
+
+---
+
+## Tips & Tricks
+
+Difficulty tracks:
+
+- Beginner
+- Intermediate
+- Advanced
+
+Topics include:
+
+- Excellent throws
+- XP grinding
+- Stardust farming
+- Best buddies
+- Storage management
+- Bag optimization
+- Fast catch
+- Rocket strategy
+- Routes
+- Showcases
+- Trading
+- Lucky friends
+- Shadow Pokémon
+- Mega evolution
+- Gym defense
+- Level 50 guide
+
+---
+
+## Collection Tracker
+
+Logged-in users can track:
+
+- Living Dex
+- Lucky Dex
+- Shiny Dex
+- Shadow Dex
+- Perfect Dex
+- XXL / XXS
+- Mega
+- Costume
+- Event Pokémon
+- Medals
+- Badges
+- Research
+
+---
+
+## Research Hub
+
+- Field Research
+- Special Research
+- Timed Research
+- Masterwork
+- Season Research
+- Reward lookup
+- Searchable database
+
+---
+
+## Egg Database
+
+- Current eggs
+- Pools
+- Odds
+- Distance
+- Hatch animation
+- Best eggs
+
+---
+
+## Rocket Center
+
+- Current leaders (Giovanni, Grunts)
+- Lineups
+- Best counters
+- Shadow rewards
+- Rotation timer
+
+---
+
+## Community
+
+- Trainer profiles
+- Friend codes
+- Raid groups
+- Campfire integration
+- Team Mystic / Valor / Instinct spaces
+- Guilds
+- Comments
+- Like system
+
+---
+
+## Useful Tools
+
+- CP calculator
+- IV calculator
+- Lucky trade calculator
+- Evolution planner
+- Candy calculator
+- XL calculator
+- Catch probability calculator
+- Raid damage calculator
+- Type matchup tool
+- PvP IV rank calculator
+- Shadow purification calculator
+
+---
+
+## Global Map
+
+Interactive map showing:
+
+- Events
+- Regional Pokémon
+- Nests
+- Showcases
+- Routes
+- Gyms
+- PokéStops
+- Community meetups
+
+---
+
+## Achievements
+
+- Trainer achievements
+- Badges
+- XP
+- Leaderboards
+- Weekly challenges
+- Season challenges
+
+---
+
+## Search System
+
+Search must be **AI-powered**.
+
+Example query: **"Mewtwo"**
+
+Results should surface on one unified page:
+
+- Pokémon
+- Raid guide
+- News
+- Graphics
+- PvP
+- Events
+- Tips
+- Videos
+- Articles
+
+---
+
+## Mobile Experience
+
+Everything should work perfectly on mobile with:
+
+- One-thumb navigation
+- Bottom navigation bar
+- Floating search button
+- Swipe between Pokémon
+- Offline cache
+- Dark mode
+
+---
+
+## Performance
+
+- Fast loading
+- Progressive Web App (PWA)
+- Offline support
+- Image lazy loading
+- Skeleton loaders
+- Realtime updates
+
+---
+
+## Admin CMS
+
+Admin dashboard for:
+
+- Publishing news
+- Uploading graphics
+- Updating events
+- Editing Pokémon data
+- Managing raid bosses
+- Managing research
+- Approving comments
+- Sending notifications
+
+---
+
+## Recommended Tech Stack
+
+### Frontend
+
+- Next.js (App Router)
+- React
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- React Query
+
+### Backend
+
+- NestJS or Next.js API Routes
+- PostgreSQL
+- Prisma ORM
+- Redis (caching)
+- Authentication (Clerk / Auth.js)
+
+### Infrastructure
+
+- Vercel (frontend)
+- Railway or Supabase (database)
+- Cloudflare CDN
+- Image optimization with `next/image`
+
+### Integrations
+
+- Pokémon GO API / data sources (where permitted)
+- Official Pokémon GO news feeds
+- Community data providers
+- YouTube embeds
+- Interactive maps
+- Push notifications
+- Analytics
+
+---
+
+## Features Beyond the Current Notes
+
+These additions could make TrainerDex stand out:
+
+1. **AI Team Builder** — Upload screenshots of Pokémon storage and get raid/PvP teams built from only the Pokémon you own.
+2. **Daily Dashboard** — Personalized checklist for free pass, research streak, daily spawn, buddy progress, gifts, and event tasks.
+3. **Live Event Timeline** — Horizontal timeline of the next 90 days with countdowns.
+4. **Trainer Profile Sync** — Track collections, goals, badges, and progress across devices.
+5. **Interactive Type Matchup Explorer** — Visual weakness/resistance explorer with filters.
+6. **Notification Center** — Alerts for Spotlight Hour, Community Day, raid boss changes, and new shiny releases.
+7. **Accessibility & Localization** — Multi-language support, colorblind palettes, adjustable font size, and screen-reader support.
+
+---
+
+## Gstack Integration
+
+This project lives inside the **SecondBrain** Obsidian vault, which has [gstack](../gstack.md) installed and active globally at `~/.claude/skills/gstack`.
+
+gstack gives Claude Code 23 specialist slash-command roles. Use the following sprint order when building TrainerDex:
+
+```
+/office-hours       ← reframe and challenge each feature before building
+/autoplan           ← CEO + design + engineering review in one command
+build               ← implement
+/review             ← staff engineer catches bugs that pass CI
+/qa https://...     ← QA lead with real Chromium browser
+/ship               ← open PR with tests
+/land-and-deploy    ← merge → CI → verify production
+/retro              ← weekly retrospective
+```
+
+### Recommended skills per area
+
+| Area | Skills |
+|---|---|
+| New features | `/office-hours`, `/autoplan` |
+| UI / design | `/plan-design-review`, `/design-html`, `/design-shotgun` |
+| Code quality | `/review`, `/investigate` |
+| Testing | `/qa`, `/qa-only` |
+| Security | `/cso` (run before every production deploy) |
+| Docs | `/document-release` |
+| Deployment | `/ship`, `/land-and-deploy`, `/canary` |
+| Session recovery | `/context-save`, `/context-restore` |
+
+To activate gstack in this project, add the following block to `CLAUDE.md`:
+
+```markdown
+## gstack
+Use /browse from gstack for all web browsing. Never use mcp__claude-in-chrome__* tools.
+Available skills: /office-hours, /plan-ceo-review, /plan-eng-review, /plan-design-review,
+/design-consultation, /design-shotgun, /design-html, /review, /ship, /land-and-deploy,
+/canary, /benchmark, /browse, /open-gstack-browser, /qa, /qa-only, /design-review,
+/setup-browser-cookies, /setup-deploy, /setup-gbrain, /sync-gbrain, /retro, /investigate,
+/document-release, /codex, /cso, /autoplan, /pair-agent, /careful, /freeze, /guard,
+/unfreeze, /gstack-upgrade, /learn, /context-save, /context-restore.
+
+Sprint order: /office-hours → /autoplan → build → /review → /qa → /ship → /retro
+Security: run /cso before any production deploy.
+Recovery: use /context-restore to resume interrupted sessions.
+```
+
+---
+
+## Final Positioning
+
+If implemented well, TrainerDex can become a **daily companion app** rather than just another Pokémon GO information website — giving it a clear identity and long-term value.

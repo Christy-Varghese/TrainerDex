@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+/* Class-based dark mode: `dark:` utilities key off a `.dark` class on <html>. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #f1f5f9; /* slate-100 */
+  --foreground: #0f172a; /* slate-900 */
+}
+
+.dark {
+  --background: #0b1020; /* deep night */
+  --foreground: #e2e8f0; /* slate-200 */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Smooth theme switch */
+html {
+  color-scheme: light dark;
+}
+* {
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* In dark mode, light colored shadows (shadow-*-200) read as white halos.
+   Re-tint them to a dark, subtle shadow so cards/heroes stay clean. */
+.dark .shadow-sky-200,
+.dark .shadow-rose-200,
+.dark .shadow-emerald-200,
+.dark .shadow-violet-200,
+.dark .shadow-indigo-200,
+.dark .shadow-amber-200,
+.dark .shadow-teal-200,
+.dark .shadow-fuchsia-200,
+.dark .shadow-purple-200,
+.dark .shadow-slate-200 {
+  --tw-shadow-color: rgba(2, 6, 23, 0.5);
+}
+
+/* ---- Global dark surface remap -------------------------------------------
+   Most components were authored light-first with bg-white / slate text. Rather
+   than annotate every element, remap the common neutral surfaces in dark mode
+   for a consistent theme. Colored accent badges (bg-amber-100 etc.) are left
+   intact — they still read well on dark. Scoped to app chrome, not the graphic
+   posters (those render in a light context for PNG capture).
+
+   These use `.dark .X` (specificity 0,2,0) so they reliably beat the bare
+   light utility (`.bg-white`, 0,1,0) on every component authored light-first.
+   The page shell (body) must therefore NOT rely on a neutral surface utility
+   like `bg-slate-100` — it would get remapped to a card color. Body uses the
+   CSS-var `--background` instead (see body rule above), which the remap never
+   touches. */
+.dark .bg-white {
+  background-color: #131a2e;
+}
+.dark .bg-slate-50 {
+  background-color: #0f1626;
+}
+.dark .bg-slate-100 {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+.dark .text-slate-900 {
+  color: #f1f5f9;
+}
+.dark .text-slate-800 {
+  color: #e2e8f0;
+}
+.dark .text-slate-700 {
+  color: #cbd5e1;
+}
+.dark .text-slate-600 {
+  color: #a3b2c7;
+}
+.dark .text-slate-500 {
+  color: #8a99af;
+}
+.dark .border-slate-200,
+.dark .border-slate-100 {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.dark .divide-slate-200 > * {
+  border-color: rgba(255, 255, 255, 0.1);
+}
