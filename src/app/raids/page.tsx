@@ -255,20 +255,27 @@ export default async function RaidsPage() {
     }
   }
 
-  // Road of Legends — shown day-by-day.
+  // Road of Legends — shown day-by-day alongside any bosses already in that week.
   const rolDays = getRoadOfLegendsDays();
   if (rolDays.length > 0) {
     const ws = weekStart(parseLocal(`${rolDays[0].date}T00:00:00`));
     if (ws.getTime() >= thisWeekStart.getTime()) {
       const key = ws.toISOString();
-      weekMap.set(key, {
-        id: key,
-        label: weekLabel(ws),
-        current: key === thisWeekStart.toISOString(),
-        bosses: [],
-        days: rolDays,
-        eventName: "Road of Legends",
-      });
+      const existing = weekMap.get(key);
+      if (existing) {
+        // Merge days into the existing week (e.g. GO Fest week) without overwriting bosses.
+        existing.days = rolDays;
+        if (!existing.eventName) existing.eventName = "Road of Legends";
+      } else {
+        weekMap.set(key, {
+          id: key,
+          label: weekLabel(ws),
+          current: key === thisWeekStart.toISOString(),
+          bosses: [],
+          days: rolDays,
+          eventName: "Road of Legends",
+        });
+      }
     }
   }
 

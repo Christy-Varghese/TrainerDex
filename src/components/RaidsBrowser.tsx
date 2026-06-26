@@ -135,7 +135,32 @@ export default function RaidsBrowser({ raids, weeks }: Props) {
 
       {/* Content */}
       {week?.days?.length ? (
-        <DayDistribution eventName={week.eventName} days={week.days} />
+        /* Road of Legends day-by-day, with GO Fest bosses below when in the same week */
+        <div>
+          <DayDistribution eventName="Road of Legends" days={week.days} />
+          {!isCurrentWeek && !!week.bosses.length && (
+            <div className="mt-10 space-y-10 border-t border-slate-100 pt-10 dark:border-white/10">
+              {week.eventName && (
+                <p className="inline-flex items-center gap-1.5 rounded-full bg-fuchsia-100 px-3 py-1 text-xs font-semibold text-fuchsia-700 dark:bg-fuchsia-500/15 dark:text-fuchsia-300">
+                  {week.eventName} Raids
+                </p>
+              )}
+              {TIER_ORDER.map((tier) => {
+                const bosses = futureGroups.get(tier);
+                if (!bosses?.length) return null;
+                return (
+                  <TierSection key={tier} tier={tier}>
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                      {bosses.map((b) => (
+                        <WeekBossCard key={b.name} boss={b} />
+                      ))}
+                    </div>
+                  </TierSection>
+                );
+              })}
+            </div>
+          )}
+        </div>
       ) : isCurrentWeek ? (
         <div className="space-y-10">
           {currentTiers.map((tier) => {
