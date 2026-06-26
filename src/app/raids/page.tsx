@@ -166,7 +166,7 @@ export default async function RaidsPage() {
       const dex = pokemon?.dex;
       const image =
         "asset" in b
-          ? `${PM_BASE}/${b.asset}`
+          ? ((b as { asset: string; image?: string }).image ?? `${PM_BASE}/${b.asset}`)
           : (b as { image?: string }).image || (dex ? spriteUrl(dex) : "");
       const cp = pokemon ? hundoCpAt(pokemon, 20) : undefined;
       const boostedCp = pokemon ? hundoCpAt(pokemon, 25) : undefined;
@@ -198,7 +198,7 @@ export default async function RaidsPage() {
           const dex = pokemon?.dex;
           currentWk.bosses.push({
             name: b.name,
-            image: `${PM_BASE}/${b.asset}`,
+            image: b.image ?? `${PM_BASE}/${b.asset}`,
             dex,
             tier: b.tier,
             canBeShiny: b.canBeShiny,
@@ -235,7 +235,7 @@ export default async function RaidsPage() {
         for (const b of supp) {
           const pokemon = resolveForCp(b.name);
           const dex = pokemon?.dex;
-          const image = `${PM_BASE}/${b.asset}`;
+          const image = b.image ?? `${PM_BASE}/${b.asset}`;
           const cp = pokemon ? hundoCpAt(pokemon, 20) : undefined;
           const boostedCp = pokemon ? hundoCpAt(pokemon, 25) : undefined;
           const types = pokemon?.types ?? [];

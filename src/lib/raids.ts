@@ -70,6 +70,8 @@ export interface SupplementBoss {
   canBeShiny: boolean;
   /** PokeMiners sprite filename (relative to the addressable-assets base URL). */
   asset: string;
+  /** Local public path override — takes priority over the PokeMiners URL when set. */
+  image?: string;
 }
 
 /**
@@ -97,8 +99,8 @@ export const RAID_BOSS_SUPPLEMENT: Record<string, SupplementBoss[]> = {
   // Sunday:   Mega Mewtwo Y (Super Mega) + 9 Mega + 38 5★ (incl. Tapus, Enamorus)
   "pokemon-go-fest-2026-global": [
     // ── Super Mega ───────────────────────────────────────────────────────────
-    { name: "Mega Mewtwo X",  tier: "Super Mega", canBeShiny: false, asset: "pm150.fMEGA_X.icon.png" },
-    { name: "Mega Mewtwo Y",  tier: "Super Mega", canBeShiny: false, asset: "pm150.fMEGA_Y.icon.png" },
+    { name: "Mega Mewtwo X",  tier: "Super Mega", canBeShiny: false, asset: "pm150.fMEGA_X.icon.png", image: "/sprites/mega-mewtwo-x.png" },
+    { name: "Mega Mewtwo Y",  tier: "Super Mega", canBeShiny: false, asset: "pm150.fMEGA_Y.icon.png", image: "/sprites/mega-mewtwo-y.png" },
     // ── Mega ────────────────────────────────────────────────────────────────
     { name: "Mega Ampharos",  tier: "Mega", canBeShiny: true,  asset: "pm181.fMEGA.icon.png" },
     { name: "Mega Gengar",    tier: "Mega", canBeShiny: true,  asset: "pm94.fMEGA.icon.png" },
@@ -138,7 +140,7 @@ export const RAID_BOSS_SUPPLEMENT: Record<string, SupplementBoss[]> = {
     { name: "Darkrai",        tier: "5★", canBeShiny: true,  asset: "pm491.icon.png" },
     { name: "Reshiram",       tier: "5★", canBeShiny: true,  asset: "pm643.icon.png" },
     { name: "Zekrom",         tier: "5★", canBeShiny: true,  asset: "pm644.icon.png" },
-    { name: "Kyurem",         tier: "5★", canBeShiny: true,  asset: "pm646.icon.png" },
+    { name: "Kyurem",         tier: "5★", canBeShiny: true,  asset: "pm646.icon.png", image: "/kyurem_sprite.png" },
     { name: "Xerneas",        tier: "5★", canBeShiny: true,  asset: "pm716.icon.png" },
     { name: "Yveltal",        tier: "5★", canBeShiny: true,  asset: "pm717.icon.png" },
     { name: "Solgaleo",       tier: "5★", canBeShiny: true,  asset: "pm791.icon.png" },
@@ -191,7 +193,7 @@ export const RAID_BOSS_SUPPLEMENT: Record<string, SupplementBoss[]> = {
   ],
   // ── Kyurem Raid Hour — July 29, 2026 ─────────────────────────────────────
   "raidhour20260729": [
-    { name: "Kyurem", tier: "5★", canBeShiny: true, asset: "pm646.icon.png" },
+    { name: "Kyurem", tier: "5★", canBeShiny: true, asset: "pm646.icon.png", image: "/kyurem_sprite.png" },
   ],
 };
 
