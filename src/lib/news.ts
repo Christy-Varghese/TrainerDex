@@ -26,6 +26,8 @@ export interface NewsItem {
   eventStart?: string;
   /** ISO date the featured event ends; omit for single-day or open-ended events. */
   eventEnd?: string;
+  /** Official article thumbnail from pokemongo.com (absolute URL or /public path). */
+  image?: string;
 }
 
 export const OFFICIAL_NEWS_BASE = "https://pokemongo.com/en/news";
@@ -98,7 +100,7 @@ export const NEWS: NewsItem[] = [
   { slug: "ozone-ascent-2026", title: "Complete Timed Research to encounter Rayquaza and more!", date: "2026-06-26", category: "research", eventStart: "2026-07-25", eventEnd: "2026-07-26" },
   { slug: "happy-birthday-professor-willow-2026", title: "Wish Professor Willow a very happy birthday with Professor Willow's assistant Pikachu!", date: "2026-06-25", category: "update", eventStart: "2026-07-21", eventEnd: "2026-07-21" },
   { slug: "special-anniversary-pikachu-celebration", title: "Keep the festivities going with the Special Anniversary Pikachu Celebration event!", date: "2026-06-24", category: "update", eventStart: "2026-07-13", eventEnd: "2026-07-20" },
-  { slug: "gofest-2026-global", title: "Pokémon GO Fest 2026: Global — Everything You Need to Know", date: "2026-06-23", category: "go-fest", eventStart: "2026-07-11", eventEnd: "2026-07-12" },
+  { slug: "gofest-2026-global", title: "Pokémon GO Fest 2026: Global — Everything You Need to Know", date: "2026-06-23", category: "go-fest", eventStart: "2026-07-11", eventEnd: "2026-07-12", image: "/graphics/event-go-fest-global.png" },
   { slug: "pvp-updates-competitors-cup-2026", title: "Pokémon GO Trainer Battle Update", date: "2026-06-23", category: "battle", eventStart: "2026-06-23" },
   { slug: "road-of-legends-2026", title: "The Road of Legends leads the way to Pokémon GO Fest 2026: Global!", date: "2026-06-18", category: "go-fest", eventStart: "2026-06-18", eventEnd: "2026-07-11" },
   { slug: "community-celebrations-go-fest-2026-details-asia-pacific", title: "GO Fest 2026: Global Community Celebrations in the Asia-Pacific region!", date: "2026-06-17", category: "go-fest", eventStart: "2026-07-11", eventEnd: "2026-07-12" },
@@ -133,16 +135,22 @@ interface CategoryMeta {
   label: string;
   emoji: string;
   badge: string;
+  /** Tailwind bg class for the news-card left panel. */
+  panelBg: string;
+  /** Tailwind text class for text inside the panel. */
+  panelText: string;
+  /** Icon name for the left panel. */
+  icon: import("@/components/Icon").IconName;
 }
 
 const CATEGORY_META: Record<NewsCategory, CategoryMeta> = {
-  "community-day": { label: "Community Day", emoji: "🌟", badge: "bg-amber-100 text-amber-700" },
-  raid: { label: "Raids", emoji: "🛡️", badge: "bg-rose-100 text-rose-700" },
-  "go-fest": { label: "GO Fest", emoji: "🎆", badge: "bg-fuchsia-100 text-fuchsia-700" },
-  battle: { label: "Battle", emoji: "🥊", badge: "bg-violet-100 text-violet-700" },
-  "go-pass": { label: "GO Pass", emoji: "🎟️", badge: "bg-lime-100 text-lime-700" },
-  research: { label: "Research", emoji: "🔬", badge: "bg-sky-100 text-sky-700" },
-  update: { label: "Update", emoji: "📣", badge: "bg-slate-100 text-slate-600" },
+  "community-day": { label: "Community Day", emoji: "🌟", badge: "bg-amber-100 text-amber-700", panelBg: "bg-amber-100 dark:bg-amber-500/20",  panelText: "text-amber-700 dark:text-amber-300",  icon: "star"     },
+  raid:            { label: "Raids",          emoji: "🛡️", badge: "bg-rose-100 text-rose-700",   panelBg: "bg-rose-100 dark:bg-rose-500/20",    panelText: "text-rose-700 dark:text-rose-300",    icon: "shield"   },
+  "go-fest":       { label: "GO Fest",        emoji: "🎆", badge: "bg-fuchsia-100 text-fuchsia-700", panelBg: "bg-fuchsia-100 dark:bg-fuchsia-500/20", panelText: "text-fuchsia-700 dark:text-fuchsia-300", icon: "sparkles" },
+  battle:          { label: "Battle",         emoji: "🥊", badge: "bg-violet-100 text-violet-700", panelBg: "bg-violet-100 dark:bg-violet-500/20",  panelText: "text-violet-700 dark:text-violet-300",  icon: "bolt"     },
+  "go-pass":       { label: "GO Pass",        emoji: "🎟️", badge: "bg-lime-100 text-lime-700",    panelBg: "bg-lime-100 dark:bg-lime-500/20",    panelText: "text-lime-700 dark:text-lime-300",    icon: "calendar" },
+  research:        { label: "Research",       emoji: "🔬", badge: "bg-sky-100 text-sky-700",     panelBg: "bg-sky-100 dark:bg-sky-500/20",      panelText: "text-sky-700 dark:text-sky-300",      icon: "lightbulb"},
+  update:          { label: "Update",         emoji: "📣", badge: "bg-slate-100 text-slate-600", panelBg: "bg-slate-100 dark:bg-white/5",       panelText: "text-slate-600 dark:text-slate-400",  icon: "megaphone"},
 };
 
 export function newsCategoryMeta(c: NewsCategory): CategoryMeta {
