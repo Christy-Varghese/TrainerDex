@@ -135,32 +135,8 @@ export default function RaidsBrowser({ raids, weeks }: Props) {
 
       {/* Content */}
       {week?.days?.length ? (
-        /* Road of Legends day-by-day, with GO Fest bosses below when in the same week */
-        <div>
-          <DayDistribution eventName="Road of Legends" days={week.days} />
-          {!isCurrentWeek && !!week.bosses.length && (
-            <div className="mt-10 space-y-10 border-t border-slate-100 pt-10 dark:border-white/10">
-              {week.eventName && (
-                <p className="inline-flex items-center gap-1.5 rounded-full bg-fuchsia-100 px-3 py-1 text-xs font-semibold text-fuchsia-700 dark:bg-fuchsia-500/15 dark:text-fuchsia-300">
-                  {week.eventName} Raids
-                </p>
-              )}
-              {TIER_ORDER.map((tier) => {
-                const bosses = futureGroups.get(tier);
-                if (!bosses?.length) return null;
-                return (
-                  <TierSection key={tier} tier={tier}>
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                      {bosses.map((b) => (
-                        <WeekBossCard key={b.name} boss={b} />
-                      ))}
-                    </div>
-                  </TierSection>
-                );
-              })}
-            </div>
-          )}
-        </div>
+        /* Day-by-day view — covers Road of Legends (Jul 6–10) + GO Fest (Jul 11–12) */
+        <DayDistribution days={week.days} />
       ) : isCurrentWeek ? (
         <div className="space-y-10">
           {currentTiers.map((tier) => {
@@ -343,18 +319,26 @@ function WeekBossCard({ boss }: { boss: WeekBoss }) {
 
 // ─── Road of Legends day-by-day view ─────────────────────────────────────────
 
-function DayDistribution({ eventName, days }: { eventName?: string; days: RoLDay[] }) {
+function DayDistribution({ days }: { days: RoLDay[] }) {
   const [activeDay, setActiveDay] = useState(days[0]?.date ?? "");
   const day = days.find((d) => d.date === activeDay) ?? days[0];
   if (!day) return null;
 
+  // Visually separate RoL days (Jul 6–10) from GO Fest days (Jul 11–12) in the pill bar.
+  const isGoFest = (date: string) => date >= "2026-07-11";
+
   return (
     <div>
-      {eventName && (
-        <p className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700 dark:bg-amber-500/15 dark:text-amber-300">
-          <Icon name="star" /> {eventName} — day by day
-        </p>
-      )}
+      {/* Per-day badge so the user knows which event is active */}
+      <p className={[
+        "mb-3 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold transition-colors",
+        isGoFest(activeDay)
+          ? "bg-fuchsia-100 text-fuchsia-700 dark:bg-fuchsia-500/15 dark:text-fuchsia-300"
+          : "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300",
+      ].join(" ")}>
+        <Icon name="star" />
+        {isGoFest(activeDay) ? "GO Fest 2026: Global" : "Road of Legends"}
+      </p>
 
       <div className="-mx-4 mb-4 overflow-x-auto px-4">
         <div className="flex w-max gap-2">
@@ -364,10 +348,15 @@ function DayDistribution({ eventName, days }: { eventName?: string; days: RoLDay
               type="button"
               onClick={() => setActiveDay(d.date)}
               className={[
-                "whitespace-nowrap rounded-xl px-3.5 py-1.5 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400",
+                "whitespace-nowrap rounded-xl px-3.5 py-1.5 text-sm font-medium transition focus-visible:outline-none",
+                isGoFest(d.date)
+                  ? "focus-visible:ring-2 focus-visible:ring-fuchsia-400"
+                  : "focus-visible:ring-2 focus-visible:ring-amber-400",
                 d.date === activeDay
-                  ? "bg-amber-500 text-white shadow-sm"
-                  : "border border-slate-200 bg-white text-slate-600 hover:border-amber-300 dark:border-white/10 dark:bg-white/5 dark:text-slate-300",
+                  ? isGoFest(d.date)
+                    ? "bg-fuchsia-500 text-white shadow-sm"
+                    : "bg-amber-500 text-white shadow-sm"
+                  : "border border-slate-200 bg-white text-slate-600 hover:border-rose-300 dark:border-white/10 dark:bg-white/5 dark:text-slate-300",
               ].join(" ")}
             >
               {d.label}

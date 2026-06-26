@@ -8,7 +8,7 @@ import { getRaids, tierMeta, RAID_BOSS_SUPPLEMENT } from "@/lib/raids";
 import { getEvents } from "@/lib/events";
 import type { Pokemon } from "@/lib/pokedex";
 import { findByName, hundoCpAt, spriteUrl } from "@/lib/pokedex";
-import { getRoadOfLegendsDays } from "@/lib/road-of-legends";
+import { getRoadOfLegendsDays, type RoLDay, type RoLTier } from "@/lib/road-of-legends";
 import { hasEnded, parseLocal } from "@/lib/time";
 
 /** Monday 00:00 of the week containing `d`. */
@@ -277,6 +277,46 @@ export default async function RaidsPage() {
         });
       }
     }
+  }
+
+  // ── GO Fest day view — split bosses into Saturday (Jul 11) and Sunday (Jul 12) ──
+  // Names that appear on Saturday; everything else is Sunday.
+  const GOFEST_SAT = new Set([
+    "Mega Mewtwo X",
+    "Mega Ampharos", "Mega Gengar", "Mega Aerodactyl", "Mega Blaziken",
+    "Mega Swampert", "Mega Abomasnow", "Mega Alakazam", "Mega Pidgeot", "Mega Salamence",
+    "Articuno", "Zapdos", "Moltres", "Raikou", "Entei", "Suicune", "Lugia", "Ho-Oh",
+    "Kyogre", "Groudon", "Rayquaza", "Uxie", "Mesprit", "Azelf",
+    "Dialga", "Palkia", "Reshiram", "Zekrom", "Kyurem", "Xerneas", "Yveltal",
+    "Solgaleo", "Lunala", "Giratina",
+  ]);
+  function bossesToRolTiers(bosses: WeekBoss[]): RoLTier[] {
+    const TIER_SLOTS = ["Super Mega", "Mega", "5★"] as const;
+    const byTier = new Map<string, WeekBoss[]>();
+    for (const b of bosses) {
+      const t = b.tier ?? "5★";
+      byTier.set(t, [...(byTier.get(t) ?? []), b]);
+    }
+    return TIER_SLOTS.filter((t) => byTier.has(t)).map((t) => ({
+      tier: t,
+      bosses: byTier.get(t)!.map((b) => ({
+        name: b.name,
+        shiny: b.canBeShiny,
+        dex: b.dex,
+        sprite: b.image,
+      })),
+    }));
+  }
+  const gofestWk = weekMap.get(weekStart(new Date(2026, 6, 11)).toISOString());
+  if (gofestWk && gofestWk.bosses.length > 0) {
+    const satBosses = gofestWk.bosses.filter((b) => GOFEST_SAT.has(b.name));
+    const sunBosses = gofestWk.bosses.filter((b) => !GOFEST_SAT.has(b.name));
+    const gofestDays: RoLDay[] = [
+      { label: "Saturday, July 11", date: "2026-07-11", tiers: bossesToRolTiers(satBosses) },
+      { label: "Sunday, July 12",   date: "2026-07-12", tiers: bossesToRolTiers(sunBosses) },
+    ];
+    gofestWk.days = [...(gofestWk.days ?? []), ...gofestDays];
+    gofestWk.bosses = [];
   }
 
   const weeks = [...weekMap.values()].sort((a, b) => a.id.localeCompare(b.id)).slice(0, 8);
