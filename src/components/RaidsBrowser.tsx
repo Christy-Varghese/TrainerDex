@@ -10,7 +10,7 @@ import RaidCard from "./RaidCard";
 import SpriteImage from "./SpriteImage";
 import ShadowBadge from "./ShadowBadge";
 import Icon from "./Icon";
-import { spriteUrl } from "@/lib/pokedex";
+import { spriteUrl, findByName, hundoCpAt } from "@/lib/pokedex";
 
 const TIER_ORDER = ["Super Mega", "Mega", "5★", "3★", "1★", "Shadow"];
 const MONTH_DAY: Intl.DateTimeFormatOptions = { month: "short", day: "numeric" };
@@ -22,6 +22,17 @@ function fmtDate(iso: string) {
 
 function shortLabel(label: string) {
   return label.replace("Week of ", "");
+}
+
+function weekPillLabel(w: RaidWeek): string {
+  if (w.current) return "This week";
+  if (w.eventName) {
+    const n = w.eventName;
+    if (n.includes("GO Fest")) return "GO Fest";
+    if (n.length <= 18) return n;
+    return n.slice(0, 17) + "…";
+  }
+  return shortLabel(w.label);
 }
 
 type Props = {
@@ -115,7 +126,7 @@ export default function RaidsBrowser({ raids, weeks }: Props) {
                     : "border border-slate-200 bg-white text-slate-600 hover:border-rose-300 dark:border-white/10 dark:bg-white/5 dark:text-slate-300",
                 ].join(" ")}
               >
-                {w.current ? "This week" : shortLabel(w.label)}
+                {weekPillLabel(w)}
               </button>
             ))}
           </div>
@@ -344,18 +355,24 @@ function DayDistribution({ eventName, days }: { eventName?: string; days: RoLDay
         {day.tiers.map((t) => (
           <TierSection key={t.tier} tier={t.tier}>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {t.bosses.map((b) => (
-                <WeekBossCard
-                  key={b.name}
-                  boss={{
-                    name: b.name,
-                    image: b.sprite ?? (b.dex ? spriteUrl(b.dex) : ""),
-                    dex: b.dex,
-                    canBeShiny: b.shiny,
-                    tier: t.tier,
-                  }}
-                />
-              ))}
+              {t.bosses.map((b) => {
+                const pokemon = findByName(b.name);
+                return (
+                  <WeekBossCard
+                    key={b.name}
+                    boss={{
+                      name: b.name,
+                      image: b.sprite ?? (b.dex ? spriteUrl(b.dex) : ""),
+                      dex: b.dex,
+                      canBeShiny: b.shiny,
+                      tier: t.tier,
+                      cp: pokemon ? hundoCpAt(pokemon, 20) : undefined,
+                      boostedCp: pokemon ? hundoCpAt(pokemon, 25) : undefined,
+                      types: pokemon?.types ?? [],
+                    }}
+                  />
+                );
+              })}
             </div>
           </TierSection>
         ))}
