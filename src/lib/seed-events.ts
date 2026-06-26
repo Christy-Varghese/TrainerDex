@@ -81,6 +81,156 @@ export const SEED_EVENTS: PogoEvent[] = [
     end: "2026-06-27T20:00:00",
     extraData: null,
   },
+  // ── July raid rotation (week of Jun 30) ─────────────────────────────────
+  {
+    eventID: "articuno-zapdos-moltres-in-5-star-raid-battles-july-2026",
+    name: "Five-Star Raids: Articuno, Zapdos, Moltres",
+    eventType: "raid-battles",
+    heading: "5★ Raids",
+    link: "https://pokemongolive.com/",
+    image:
+      "https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Images/Pokemon/Addressable%20Assets/pm145.icon.png",
+    start: "2026-07-01T00:00:00",
+    end: "2026-07-14T00:00:00",
+    extraData: {
+      raidbattles: {
+        bosses: [
+          { name: "Articuno", tier: "5★", canBeShiny: true },
+          { name: "Zapdos",   tier: "5★", canBeShiny: true },
+          { name: "Moltres",  tier: "5★", canBeShiny: true },
+        ],
+      },
+    },
+  },
+  {
+    eventID: "mega-lucario-in-mega-raids-july-2026",
+    name: "Mega Raids: Mega Lucario",
+    eventType: "raid-battles",
+    heading: "Mega Raids",
+    link: "https://pokemongolive.com/",
+    image:
+      "https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Images/Pokemon/Addressable%20Assets/pm448.fMEGA.icon.png",
+    start: "2026-07-01T00:00:00",
+    end: "2026-07-14T00:00:00",
+    extraData: {
+      raidbattles: {
+        bosses: [{ name: "Mega Lucario", tier: "Mega", canBeShiny: true }],
+      },
+    },
+  },
+  {
+    eventID: "shadow-palkia-in-shadow-raids-july-2026",
+    name: "Shadow Raids: Shadow Palkia",
+    eventType: "raid-battles",
+    heading: "Shadow Raids",
+    link: "https://pokemongolive.com/",
+    image:
+      "https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Images/Pokemon/Addressable%20Assets/pm484.fSHADOW.icon.png",
+    start: "2026-07-01T00:00:00",
+    end: "2026-07-14T00:00:00",
+    extraData: {
+      raidbattles: {
+        bosses: [{ name: "Shadow Palkia", tier: "Shadow", canBeShiny: true }],
+      },
+    },
+  },
+  // ── July 14+ rotation ────────────────────────────────────────────────────
+  {
+    eventID: "kyogre-in-5-star-raid-battles-july-2026",
+    name: "Five-Star Raids: Kyogre",
+    eventType: "raid-battles",
+    heading: "5★ Raids",
+    link: "https://pokemongolive.com/",
+    image:
+      "https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Images/Pokemon/Addressable%20Assets/pm382.icon.png",
+    start: "2026-07-15T00:00:00",
+    end: "2026-07-22T00:00:00",
+    extraData: {
+      raidbattles: {
+        bosses: [{ name: "Kyogre", tier: "5★", canBeShiny: true }],
+      },
+    },
+  },
+  {
+    eventID: "mega-sceptile-in-mega-raids-july-2026",
+    name: "Mega Raids: Mega Sceptile",
+    eventType: "raid-battles",
+    heading: "Mega Raids",
+    link: "https://pokemongolive.com/",
+    image:
+      "https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Images/Pokemon/Addressable%20Assets/pm254.fMEGA.icon.png",
+    start: "2026-07-15T00:00:00",
+    end: "2026-07-22T00:00:00",
+    extraData: {
+      raidbattles: {
+        bosses: [{ name: "Mega Sceptile", tier: "Mega", canBeShiny: true }],
+      },
+    },
+  },
+  {
+    eventID: "solgaleo-in-5-star-raid-battles-july-2026",
+    name: "Five-Star Raids: Solgaleo",
+    eventType: "raid-battles",
+    heading: "5★ Raids",
+    link: "https://pokemongolive.com/",
+    image:
+      "https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Images/Pokemon/Addressable%20Assets/pm791.icon.png",
+    start: "2026-07-22T00:00:00",
+    end: "2026-07-29T00:00:00",
+    extraData: {
+      raidbattles: {
+        bosses: [{ name: "Solgaleo", tier: "5★", canBeShiny: true }],
+      },
+    },
+  },
+  {
+    eventID: "mega-salamence-in-mega-raids-july-2026",
+    name: "Mega Raids: Mega Salamence",
+    eventType: "raid-battles",
+    heading: "Mega Raids",
+    link: "https://pokemongolive.com/",
+    image:
+      "https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Images/Pokemon/Addressable%20Assets/pm373.fMEGA.icon.png",
+    start: "2026-07-22T00:00:00",
+    end: "2026-07-29T00:00:00",
+    extraData: {
+      raidbattles: {
+        bosses: [{ name: "Mega Salamence", tier: "Mega", canBeShiny: true }],
+      },
+    },
+  },
+  {
+    eventID: "kyurem-in-5-star-raid-battles-july-2026",
+    name: "Five-Star Raids: Kyurem",
+    eventType: "raid-battles",
+    heading: "5★ Raids",
+    link: "https://pokemongolive.com/",
+    image:
+      "https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Images/Pokemon/Addressable%20Assets/pm646.icon.png",
+    start: "2026-07-29T00:00:00",
+    end: "2026-08-05T00:00:00",
+    extraData: {
+      raidbattles: {
+        bosses: [{ name: "Kyurem", tier: "5★", canBeShiny: true }],
+      },
+    },
+  },
+  {
+    eventID: "mega-aggron-in-mega-raids-july-2026",
+    name: "Mega Raids: Mega Aggron",
+    eventType: "raid-battles",
+    heading: "Mega Raids",
+    link: "https://pokemongolive.com/",
+    image:
+      "https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Images/Pokemon/Addressable%20Assets/pm306.fMEGA.icon.png",
+    start: "2026-07-29T00:00:00",
+    end: "2026-08-05T00:00:00",
+    extraData: {
+      raidbattles: {
+        bosses: [{ name: "Mega Aggron", tier: "Mega", canBeShiny: true }],
+      },
+    },
+  },
   {
     eventID: "skarmory-super-mega-raid-day-2026",
     name: "Skarmory Super Mega Raid Day",

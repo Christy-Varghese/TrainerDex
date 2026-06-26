@@ -95,6 +95,34 @@ export default async function RaidsPage() {
   const PM_BASE =
     "https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Images/Pokemon/Addressable%20Assets";
 
+  // ScrapedDuck's raidbattles.bosses entries always ship with tier: null.
+  // Derive the correct tier from the boss name first, then from the event ID/type.
+  function inferTier(bossName: string, bTier: string | null | undefined, eventId: string, eventType: string): string {
+    if (bTier) return bTier;
+    const n = bossName.toLowerCase();
+    if (n.startsWith("mega ")) return "Mega";
+    if (n.startsWith("shadow ")) return "Shadow";
+    const id = eventId.toLowerCase();
+    if (id.includes("shadow")) return "Shadow";
+    if (id.includes("mega")) return "Mega";
+    if (id.includes("5-star") || id.includes("five-star")) return "5★";
+    if (id.includes("3-star") || id.includes("three-star")) return "3★";
+    if (id.includes("1-star") || id.includes("one-star")) return "1★";
+    if (eventType === "raid-hour") return "5★";
+    return "5★"; // safe default
+  }
+
+  // ScrapedDuck names shadow raid bosses without the "Shadow " prefix
+  // (e.g. "shadow-palkia-in-shadow-raids-july-2026" sends name "Palkia").
+  // Restore the prefix so the UI shows the shadow badge correctly.
+  function normalizeRaidBossName(bossName: string, eventId: string): string {
+    const id = eventId.toLowerCase();
+    if (id.includes("shadow") && !bossName.toLowerCase().startsWith("shadow ")) {
+      return `Shadow ${bossName}`;
+    }
+    return bossName;
+  }
+
   for (const e of events) {
     if (hasEnded(e.end, now)) continue;
 
@@ -117,12 +145,10 @@ export default async function RaidsPage() {
           label: weekLabel(ws),
           current: key === thisWeekStart.toISOString(),
           bosses: [],
-          // Show the event name as the week heading for GO Fest / Raid Day weeks.
           eventName: e.eventType === "pokemon-go-fest" ? e.name : undefined,
         })
         .get(key)!;
 
-    // Derive event date/time tag for Raid Days and Raid Hours.
     const eventDate = e.start.substring(0, 10);
     const eventTime =
       e.eventType === "raid-day"
@@ -133,8 +159,10 @@ export default async function RaidsPage() {
     const isSpecialDay = e.eventType === "raid-day" || e.eventType === "raid-hour";
 
     for (const b of activeBosses) {
-      if (wk.bosses.some((x) => x.name === b.name)) continue;
-      const pokemon = resolveForCp(b.name);
+      const rawName = "asset" in b ? b.name : normalizeRaidBossName(b.name, e.eventID);
+      if (wk.bosses.some((x) => x.name === rawName)) continue;
+      const tier = "asset" in b ? b.tier : inferTier(rawName, b.tier as string | null | undefined, e.eventID, e.eventType);
+      const pokemon = resolveForCp(rawName);
       const dex = pokemon?.dex;
       const image =
         "asset" in b
@@ -144,10 +172,10 @@ export default async function RaidsPage() {
       const boostedCp = pokemon ? hundoCpAt(pokemon, 25) : undefined;
       const types = pokemon?.types ?? [];
       wk.bosses.push({
-        name: b.name,
+        name: rawName,
         image,
         dex,
-        tier: b.tier,
+        tier,
         canBeShiny: b.canBeShiny,
         cp,
         boostedCp,
