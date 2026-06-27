@@ -2,6 +2,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getRoadOfLegendsDays } from "@/lib/road-of-legends";
 import { getPokemon, hundoCpAt, spriteUrl } from "@/lib/pokedex";
+import PosterScaler from "@/components/PosterScaler";
 
 export const revalidate = 3600;
 
@@ -31,7 +32,8 @@ export default async function RoLDayGraphic({ params }: { params: Promise<{ date
   const dayIdx = days.findIndex((d) => d.date === date) + 1;
 
   return (
-    <div className="grid min-h-screen place-items-center bg-slate-200 p-6">
+    <div className="min-h-screen bg-slate-200 flex flex-col items-center justify-center p-4 sm:p-6">
+      <PosterScaler posterWidth={760}>
       <div
         id="poster"
         className="relative w-[760px] overflow-hidden rounded-3xl px-8 py-9 text-white shadow-2xl"
@@ -81,6 +83,8 @@ export default async function RoLDayGraphic({ params }: { params: Promise<{ date
                 <div className="grid grid-cols-4 gap-2.5">
                   {tier.bosses.map((b) => {
                     const p = b.dex ? getPokemon(b.dex) : undefined;
+                    // Prefer form-level stats (Therian formes) over the base Pokédex entry.
+                    const statsSource = b.stats ?? p;
                     const sprite = b.sprite ?? (b.dex ? spriteUrl(b.dex) : "");
                     return (
                       <div
@@ -94,13 +98,13 @@ export default async function RoLDayGraphic({ params }: { params: Promise<{ date
                           )}
                         </div>
                         <p className="max-w-full truncate text-center text-[11px] font-bold leading-tight">{b.name}</p>
-                        {p && (
+                        {statsSource && (
                           <div className="mt-0.5 flex items-center gap-1">
                             <span className="rounded bg-black/85 px-1.5 py-0.5 text-[11px] font-extrabold tabular-nums">
-                              {hundoCpAt(p, 20).toLocaleString()}
+                              {hundoCpAt(statsSource, 20).toLocaleString()}
                             </span>
                             <span className="rounded bg-black/85 px-1.5 py-0.5 text-[11px] font-extrabold tabular-nums text-amber-300">
-                              {hundoCpAt(p, 25).toLocaleString()}
+                              {hundoCpAt(statsSource, 25).toLocaleString()}
                             </span>
                           </div>
                         )}
@@ -124,6 +128,7 @@ export default async function RoLDayGraphic({ params }: { params: Promise<{ date
           <p className="mt-1 text-center text-[11px] text-white/55">TrainerDex · source: official Pokémon GO newsroom</p>
         </div>
       </div>
+      </PosterScaler>
     </div>
   );
 }

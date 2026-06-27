@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { typeColor } from "@/lib/pokedex";
+import PosterScaler from "@/components/PosterScaler";
 
 export const revalidate = 3600;
 
@@ -50,7 +51,8 @@ const WILD = [
 
 export default function GoFestGraphic() {
   return (
-    <div className="grid min-h-screen place-items-center bg-slate-200 p-6">
+    <div className="min-h-screen bg-slate-200 flex flex-col items-center justify-center p-4 sm:p-6">
+      <PosterScaler posterWidth={760}>
       <div
         id="poster"
         className="relative w-[760px] overflow-hidden rounded-3xl px-8 py-9 text-white shadow-2xl"
@@ -154,6 +156,7 @@ export default function GoFestGraphic() {
           </p>
         </div>
       </div>
+      </PosterScaler>
     </div>
   );
 }

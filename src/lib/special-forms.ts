@@ -31,6 +31,46 @@ export interface SpecialForm {
 }
 
 const FORMS: SpecialForm[] = [
+  // ── Forces of Nature — Therian Formes ─────────────────────────────────────
+  // Therian formes have meaningfully different stats from Incarnate, so they are
+  // listed here so the Road of Legends graphic can show accurate hundo CP per form.
+  {
+    baseDex: 641,
+    name: "Tornadus Therian",
+    aliases: ["tornadus therian", "therian forme tornadus", "tornadus therian forme"],
+    types: ["Flying"],
+    atk: 261, def: 186, sta: 188,
+    sprite: `${SPRITE_BASE}/pm641.fTHERIAN.icon.png`,
+    note: "Therian Forme Tornadus — stronger Defense and a more compact silhouette.",
+  },
+  {
+    baseDex: 642,
+    name: "Thundurus Therian",
+    aliases: ["thundurus therian", "therian forme thundurus", "thundurus therian forme"],
+    types: ["Electric", "Flying"],
+    atk: 295, def: 161, sta: 188,
+    sprite: `${SPRITE_BASE}/pm642.fTHERIAN.icon.png`,
+    note: "Therian Forme Thundurus — massive Attack stat, the premier Electric attacker in GO.",
+  },
+  {
+    baseDex: 645,
+    name: "Landorus Therian",
+    aliases: ["landorus therian", "therian forme landorus", "landorus therian forme"],
+    types: ["Ground", "Flying"],
+    atk: 289, def: 179, sta: 205,
+    sprite: `${SPRITE_BASE}/pm645.fTHERIAN.icon.png`,
+    note: "Therian Forme Landorus — the definitive Ground-type attacker; best-in-class for Ground DPS.",
+  },
+  {
+    baseDex: 905,
+    name: "Enamorus Therian",
+    aliases: ["enamorus therian", "therian forme enamorus", "enamorus therian forme"],
+    types: ["Fairy", "Flying"],
+    atk: 261, def: 179, sta: 172,
+    sprite: `${SPRITE_BASE}/pm905.fTHERIAN.icon.png`,
+    note: "Therian Forme Enamorus — stronger in bulk compared to its Incarnate Forme.",
+  },
+  // ── Kyurem fusions ────────────────────────────────────────────────────────
   {
     baseDex: 646,
     name: "White Kyurem",

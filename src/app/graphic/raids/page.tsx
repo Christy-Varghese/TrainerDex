@@ -2,6 +2,7 @@ import Image from "next/image";
 import { getRaids, tierMeta, tierRank, type Raid } from "@/lib/raids";
 import { isShadowName } from "@/lib/pokedex";
 import ShadowBadge from "@/components/ShadowBadge";
+import PosterScaler from "@/components/PosterScaler";
 
 export const revalidate = 3600;
 
@@ -28,7 +29,8 @@ export default async function RaidGraphic() {
   const today = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 
   return (
-    <div className="grid min-h-screen place-items-center bg-slate-200 p-6">
+    <div className="min-h-screen bg-slate-200 flex flex-col items-center justify-center p-4 sm:p-6">
+      <PosterScaler posterWidth={720}>
       {/* Poster */}
       <div
         id="poster"
@@ -116,6 +118,7 @@ export default async function RaidGraphic() {
           </div>
         </div>
       </div>
+      </PosterScaler>
     </div>
   );
 }

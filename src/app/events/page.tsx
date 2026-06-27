@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import EventsBrowser, { type EventGroup } from "@/components/EventsBrowser";
+import EventMascot from "@/components/EventMascot";
 import Icon from "@/components/Icon";
 import RoadOfLegendsSpotlight from "@/components/RoadOfLegendsSpotlight";
 import { getEvents } from "@/lib/events";
@@ -80,6 +81,11 @@ export default async function EventsPage() {
   const liveCount = happeningNow.reduce((n, g) => n + g.events.length, 0);
   const soonCount = upcoming.reduce((n, g) => n + g.events.length, 0);
 
+  // Prefer the event types that are happening right now for the most relevant tips;
+  // fall back to upcoming types if nothing is live.
+  const liveTypes = [...new Set(happeningNow.flatMap((g) => g.events.map((e) => e.eventType)))] as EventType[];
+  const mascotTypes = liveTypes.length > 0 ? liveTypes : types;
+
   return (
     <>
       <Header active="events" />
@@ -101,6 +107,8 @@ export default async function EventsPage() {
             </span>
           </div>
         </section>
+
+        <EventMascot activeEventTypes={mascotTypes} />
 
         <RoadOfLegendsSpotlight />
 

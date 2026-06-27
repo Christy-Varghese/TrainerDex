@@ -155,17 +155,25 @@ function GraphicCard({
             ))}
           </div>
         )}
-        <div className="mt-3 flex gap-2">
+        <div className="mt-3 flex flex-wrap gap-2">
           <a
             href={png}
             download
-            className="rounded-lg bg-violet-600 px-3.5 py-1.5 text-sm font-medium text-white transition hover:bg-violet-700"
+            className="inline-flex min-h-[44px] items-center rounded-lg bg-violet-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-violet-700 active:bg-violet-800"
           >
             ⬇ Download PNG
           </a>
+          <a
+            href={png}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-[44px] items-center rounded-lg border border-slate-200 px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:border-slate-300 dark:border-white/15 dark:text-slate-300"
+          >
+            View PNG
+          </a>
           <Link
             href={openHref}
-            className="rounded-lg border border-slate-200 px-3.5 py-1.5 text-sm font-medium text-slate-700 transition hover:border-slate-300"
+            className="inline-flex min-h-[44px] items-center rounded-lg border border-slate-200 px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:border-slate-300 dark:border-white/15 dark:text-slate-300"
           >
             Open full
           </Link>

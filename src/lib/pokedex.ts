@@ -194,8 +194,8 @@ const CPM: Record<number, number> = {
   40: 0.7903,
 };
 
-/** 15/15/15 CP for a Pokémon at a given level. */
-export function hundoCpAt(p: Pokemon, level: number): number {
+/** 15/15/15 CP for a Pokémon at a given level. Accepts any object with `atk`, `def`, `sta`. */
+export function hundoCpAt(p: { atk: number; def: number; sta: number }, level: number): number {
   const cpm = CPM[level];
   if (!cpm) return 0;
   const A = p.atk + 15;
@@ -255,6 +255,8 @@ export function contextHundo(
 // live in /public (Kyurem) and /public/sprites (downloaded from PokémonDB).
 const SPRITE_OVERRIDE: Record<number, string> = {
   646: "/kyurem_sprite.png", // Kyurem
+  // Enamorus — PokeMiners pm905.icon.png 404s; PokéAPI HOME sprite as fallback
+  905: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/905.png",
   807: "/sprites/zeraora.png", // Zeraora — no PokeMiners GO asset (locally provided)
   // PokeMiners has no pm<dex>.icon.png for these — PokémonDB HOME sprites.
   649: "/sprites/pm649.png", // Genesect

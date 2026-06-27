@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Link from "next/link";
 import type { EventType, PogoEvent } from "@/lib/types";
 import { typeMeta } from "@/lib/events";
 import EventCard from "./EventCard";
+import EventDexPanel from "./EventDexPanel";
 import EmptyState from "./EmptyState";
 import Icon, { type IconName } from "./Icon";
 
@@ -40,6 +41,9 @@ type Filter = EventType | "all";
 
 export default function EventsBrowser({ happeningNow, upcoming, past = [], types }: Props) {
   const [filter, setFilter] = useState<Filter>("all");
+  const [dexEvent, setDexEvent] = useState<PogoEvent | null>(null);
+  const openDex = useCallback((event: PogoEvent) => setDexEvent(event), []);
+  const closeDex = useCallback(() => setDexEvent(null), []);
 
   const keep = (e: PogoEvent) => filter === "all" || e.eventType === filter;
 
@@ -54,6 +58,8 @@ export default function EventsBrowser({ happeningNow, upcoming, past = [], types
 
   return (
     <>
+      <EventDexPanel event={dexEvent} onClose={closeDex} />
+
       {/* Quick-nav bar */}
       <nav className="mb-6 -mx-4 overflow-x-auto px-4">
         <div className="flex w-max gap-2">
@@ -114,6 +120,7 @@ export default function EventsBrowser({ happeningNow, upcoming, past = [], types
         icon="flame"
         groups={now}
         featured
+        onDexClick={openDex}
         emptyTitle="Nothing live right now"
         emptyHint="Events will appear here as they go live. Check what's coming up below."
       />
@@ -123,6 +130,7 @@ export default function EventsBrowser({ happeningNow, upcoming, past = [], types
         title="Upcoming Events"
         icon="calendar"
         groups={next}
+        onDexClick={openDex}
         emptyTitle="Nothing scheduled yet"
         emptyHint="Check back soon — upcoming events will appear here when announced."
       />
@@ -134,6 +142,7 @@ export default function EventsBrowser({ happeningNow, upcoming, past = [], types
           icon="hourglass"
           groups={prev}
           muted
+          onDexClick={openDex}
           emptyTitle="No completed events yet"
           emptyHint="Completed events from this month will appear here for reference."
         />
@@ -148,6 +157,7 @@ function Section({
   groups,
   featured = false,
   muted = false,
+  onDexClick,
   emptyTitle,
   emptyHint,
 }: {
@@ -156,6 +166,7 @@ function Section({
   groups: EventGroup[];
   featured?: boolean;
   muted?: boolean;
+  onDexClick?: (event: PogoEvent) => void;
   emptyTitle: string;
   emptyHint?: string;
 }) {
@@ -172,7 +183,7 @@ function Section({
             <PillDivider>{g.label}</PillDivider>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {g.events.map((e) => (
-                <EventCard key={e.eventID} event={e} featured={featured} />
+                <EventCard key={e.eventID} event={e} featured={featured} onDexClick={onDexClick} />
               ))}
             </div>
           </div>

@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import WeeklyPoster from "@/components/WeeklyPoster";
+import PosterScaler from "@/components/PosterScaler";
 import { getWeek, getWeeks } from "@/lib/weekly";
 
 export const revalidate = 3600;
@@ -21,8 +22,10 @@ export default async function WeekGraphicPage({ params }: { params: Promise<{ we
   const w = await getWeek(week);
   if (!w) notFound();
   return (
-    <div className="grid min-h-screen place-items-center bg-slate-200 p-6">
-      <WeeklyPoster week={w} domId="poster" />
+    <div className="min-h-screen bg-slate-200 flex flex-col items-center justify-center p-4 sm:p-6">
+      <PosterScaler posterWidth={720}>
+        <WeeklyPoster week={w} domId="poster" />
+      </PosterScaler>
     </div>
   );
 }

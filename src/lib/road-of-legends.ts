@@ -16,6 +16,8 @@ export interface RoLBoss {
   dex?: number;
   /** Form-specific sprite (fused/special forms); falls back to base in the UI. */
   sprite?: string;
+  /** Form-specific GO stats — set when a SpecialForm overrides the base Pokédex entry. */
+  stats?: { atk: number; def: number; sta: number };
 }
 export interface RoLTier {
   tier: string; // "5★" | "Mega" | "Primal"
@@ -108,7 +110,8 @@ export function getRoadOfLegendsDays(): RoLDay[] {
       // "Note: …" and other prose can trail the last day before the next
       // heading and would otherwise render as empty placeholder boxes.
       if (dex === undefined) continue;
-      curTier.bosses.push({ name: raw, shiny, dex, sprite: sf?.sprite });
+      const stats = sf ? { atk: sf.atk, def: sf.def, sta: sf.sta } : undefined;
+      curTier.bosses.push({ name: raw, shiny, dex, sprite: sf?.sprite, stats });
     }
   }
 

@@ -3,20 +3,24 @@ import { notFound } from "next/navigation";
 import { getArticle, getNewsItem } from "@/lib/news";
 import { extractPokemon, hundoCpAt, spriteUrl } from "@/lib/pokedex";
 import ShadowBadge from "@/components/ShadowBadge";
+import PosterScaler from "@/components/PosterScaler";
 
 export const revalidate = 3600;
 
 // Curated event posters — title/subtitle for the events we feature.
-const POSTERS: Record<string, { title: string; subtitle: string; gradient: string }> = {
+// `dateLabel` overrides the article publish date shown in the badge.
+const POSTERS: Record<string, { title: string; subtitle: string; gradient: string; dateLabel?: string }> = {
   "road-of-legends-2026": {
     title: "Road of Legends",
     subtitle: "Raid-exclusive Legendaries · hundo CP (raid catch)",
     gradient: "radial-gradient(130% 90% at 50% -10%, #f59e0b 0%, #b45309 45%, #7c2d12 100%)",
+    dateLabel: "July 6–10, 2026",
   },
   "community-celebrations-go-fest-2026": {
     title: "GO Fest 2026: Global",
     subtitle: "Raid-exclusive Legendaries · hundo CP (raid catch)",
     gradient: "radial-gradient(130% 90% at 50% -10%, #8b5cf6 0%, #6d28d9 45%, #4c1d95 100%)",
+    dateLabel: "July 19–20, 2026",
   },
 };
 
@@ -42,7 +46,8 @@ export default async function EventGraphic({ params }: { params: Promise<{ slug:
   );
 
   return (
-    <div className="grid min-h-screen place-items-center bg-slate-200 p-6">
+    <div className="min-h-screen bg-slate-200 flex flex-col items-center justify-center p-4 sm:p-6">
+      <PosterScaler posterWidth={720}>
       <div
         id="poster"
         className="relative w-[720px] overflow-hidden rounded-3xl px-8 py-9 text-white shadow-2xl"
@@ -67,7 +72,11 @@ export default async function EventGraphic({ params }: { params: Promise<{ slug:
                 Trainer<span className="text-sky-300">Dex</span>
               </span>
             </div>
-            {item && <span className="rounded-full bg-white/15 px-3.5 py-1.5 text-xs font-semibold">{item.date}</span>}
+            {(cfg.dateLabel ?? item?.date) && (
+              <span className="rounded-full bg-white/15 px-3.5 py-1.5 text-xs font-semibold">
+                {cfg.dateLabel ?? item?.date}
+              </span>
+            )}
           </div>
           <h1 className="text-center text-3xl font-black uppercase tracking-wide drop-shadow">{cfg.title}</h1>
           <p className="mb-7 text-center text-sm font-medium text-white/75">{cfg.subtitle}</p>
@@ -116,6 +125,7 @@ export default async function EventGraphic({ params }: { params: Promise<{ slug:
           <p className="mt-1 text-center text-[11px] text-white/55">TrainerDex · source: official Pokémon GO newsroom</p>
         </div>
       </div>
+      </PosterScaler>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { getEggs, eggsByDistance, eggDistanceColor, type Egg } from "@/lib/eggs";
+import PosterScaler from "@/components/PosterScaler";
 
 export const revalidate = 3600;
 export const metadata = { title: "Egg Hatches · Hundo CP — TrainerDex" };
@@ -13,7 +14,8 @@ export default async function EggGraphic() {
   const today = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 
   return (
-    <div className="grid min-h-screen place-items-center bg-slate-200 p-6">
+    <div className="min-h-screen bg-slate-200 flex flex-col items-center justify-center p-4 sm:p-6">
+      <PosterScaler posterWidth={720}>
       <div
         id="poster"
         className="relative w-[720px] overflow-hidden rounded-3xl px-8 py-9 text-white shadow-2xl"
@@ -71,6 +73,7 @@ export default async function EggGraphic() {
           </p>
         </div>
       </div>
+      </PosterScaler>
     </div>
   );
 }
